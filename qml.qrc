@@ -7,5 +7,6 @@
         <file>src/interfaces/WarningMessage.qml</file>
         <file>src/interfaces/AddSubsMessage.qml</file>
         <file>src/interfaces/ProgressBar.ui.qml</file>
+        <file>src/interfaces/FileDialog.qml</file>
     </qresource>
 </RCC>

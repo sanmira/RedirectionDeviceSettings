@@ -1,11 +1,12 @@
 import QtQuick 2.7
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.1
 
 Rectangle {
     id: rectangle
 
     width: 360
     height: 360
+    property alias openButton: openButton
     property alias rem1subButton: rem1subButton
     property alias add1subButton: add1subButton
     property alias clearButton: clearButton
@@ -17,102 +18,82 @@ Rectangle {
         id: gridView
         x: 8
         y: 8
-        anchors.bottom: progressBar.top
-        anchors.bottomMargin: 8
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 76
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.left: parent.left
         anchors.leftMargin: 8
-        anchors.top: parent.top
-        anchors.topMargin: 8
-        cellHeight: 240
+        anchors.top: progressBar.bottom
+        anchors.topMargin: 6
+        cellHeight: 350
         delegate: subscribersListDelegate
-        cellWidth: 210
+        cellWidth: 310
         model: subListModel
     }
 
     Button {
         id: clearButton
+        x: 245
         y: 445
-        width: 160
+        width: 231
         height: 29
         text: qsTr("Очистить таблицу")
-        anchors.left: openButton.right
-        anchors.leftMargin: 6
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 6
     }
 
     Button {
         id: rem1subButton
+        x: 245
         y: 410
-        width: 160
+        width: 231
         height: 29
         text: qsTr("-1 абонент")
-        anchors.left: createButton.right
-        anchors.leftMargin: 6
-        anchors.bottom: clearButton.top
-        anchors.bottomMargin: 6
     }
 
     Button {
         id: createButton
+        x: 9
         y: 410
-        width: 160
+        width: 230
         height: 29
         text: qsTr("Создать файл")
-        anchors.left: parent.left
-        anchors.leftMargin: 8
-        anchors.bottom: openButton.top
-        anchors.bottomMargin: 6
     }
 
     Button {
         id: openButton
+        x: 8
         y: 445
-        width: 160
+        width: 231
         height: 29
         text: qsTr("Открыть файл")
-        anchors.left: parent.left
-        anchors.leftMargin: 8
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 6
     }
 
     ProgressBar {
         id: progressBar
-        y: 410
-        height: 64
+        anchors.top: parent.top
+        anchors.topMargin: 8
         indeterminate: false
-        anchors.left: addsubsButton.right
-        anchors.leftMargin: 6
+        anchors.left: parent.left
+        anchors.leftMargin: 9
         anchors.right: parent.right
-        anchors.rightMargin: 8
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 6
+        anchors.rightMargin: 9
     }
 
     Button {
         id: add1subButton
+        x: 482
         y: 410
-        width: 160
+        width: 230
         height: 29
         text: qsTr("+1 абонент")
-        anchors.left: rem1subButton.right
-        anchors.leftMargin: 6
-        anchors.bottom: addsubsButton.top
-        anchors.bottomMargin: 6
     }
 
     Button {
         id: addsubsButton
+        x: 482
         y: 445
-        width: 160
+        width: 230
         height: 29
         text: qsTr("Добавить абонентов")
-        anchors.left: clearButton.right
-        anchors.leftMargin: 6
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 6
     }
 }

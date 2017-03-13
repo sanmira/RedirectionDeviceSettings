@@ -18,18 +18,18 @@
 */
 
 import QtQuick 2.7
-import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Window 2.0
+import QtQuick.Controls 2.1
 
 Window {
     id: addSubsWindow
     objectName: "addsubs"
     title: "Dialog"
     modality: Qt.ApplicationModal
-    maximumWidth: 180
-    minimumWidth: 180
-    maximumHeight: 80
-    minimumHeight: 80
+    maximumWidth: 210
+    minimumWidth: 210
+    maximumHeight: 110
+    minimumHeight: 110
     signal acceptedSignal(string number)
     signal canceledSignal()
 
@@ -53,7 +53,7 @@ Window {
             }
         }
     }
-    onClosing: {
+    onVisibleChanged: {
         canceledSignal()
     }
 }

@@ -4,6 +4,7 @@ FileGenerator::FileGenerator(MainModel* model, QObject *parent) : QObject(parent
                                                                   modelHandler(model)
 {
     connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onCreateButtonClicked()), this, SLOT(slot_create_file()));
+    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onOpenButtonClicked()), this, SLOT(slot_on_open_clicked()));
     connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onAddSubsClicked()), this, SLOT(slot_on_add_subs_clicked()));
     connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onClearTableClicked()), this, SLOT(slot_on_clear_table_clicked()));
     connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onAddSubClicked()), this, SLOT(slot_on_add_sub_clicked()));
@@ -52,6 +53,79 @@ void FileGenerator::slot_create_file()
     }
     file.close();
     busy(false);
+}
+
+void FileGenerator::slot_on_open_clicked()
+{
+    WindowsManager::show_file_dialog_window(this);
+    if (filePathContainer.isEmpty())
+        return;
+    if (!filePathContainer.contains("settings.txt"))
+    {
+        WindowsManager::show_notification_warning("Ошибка. Файл должен называться \"settings.txt\"");
+        filePathContainer.clear();
+        return;
+    }
+    QFile file(filePathContainer);
+    qDebug() << filePathContainer;
+    if (!file.open(QIODevice::ReadOnly))
+           return;
+    modelHandler->clear_subscribers_list();
+    QGuiApplication::processEvents();
+    QTextStream in(&file);
+    QString firstLine = in.readLine();
+    int subNumber = firstLine.toInt();
+    qDebug() << subNumber;
+    for (int i = 0; i < subNumber; i++)
+    {
+        QString line = in.readLine();
+        QString substring;
+        Subscriber sub;
+        bool isEnabled;
+        QString flatNumber1;
+        QString flatNumber2;
+        QString flatNumber3;
+        QString flatNumber4;
+        QString flatNumber5;
+
+        substring = line.mid(3, 1);
+        isEnabled = substring.toInt();
+
+        substring = line.mid(4, 2);
+        int telNumberDigits = substring.toInt();
+        if (telNumberDigits > 0)
+            flatNumber1 = line.mid(6, telNumberDigits);
+
+        substring = line.mid(26, 2);
+        telNumberDigits = substring.toInt();
+        if (telNumberDigits > 0)
+            flatNumber2 = line.mid(28, telNumberDigits);
+
+        substring = line.mid(48, 2);
+        telNumberDigits = substring.toInt();
+        if (telNumberDigits > 0)
+            flatNumber3 = line.mid(50, telNumberDigits);
+
+        substring = line.mid(70, 2);
+        telNumberDigits = substring.toInt();
+        if (telNumberDigits > 0)
+            flatNumber4 = line.mid(72, telNumberDigits);
+
+        substring = line.mid(92, 2);
+        telNumberDigits = substring.toInt();
+        if (telNumberDigits > 0)
+            flatNumber5 = line.mid(94, telNumberDigits);
+
+        modelHandler->add_new_subscriber(Subscriber(i + 1, isEnabled, flatNumber1, flatNumber2, flatNumber3, flatNumber4, flatNumber5));
+
+    }
+    file.close();
+    filePathContainer.clear();
+}
+
+void FileGenerator::slot_file_dialog(const QUrl &filePath)
+{
+    filePathContainer = filePath.toLocalFile();
 }
 
 void FileGenerator::slot_on_add_subs_clicked()

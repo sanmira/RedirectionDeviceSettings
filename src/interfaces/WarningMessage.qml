@@ -24,10 +24,8 @@ MessageDialog {
     objectName: "warning"
     title: "Warning"
     icon: StandardIcon.Warning
-    standardButtons: StandardButton.Yes | StandardButton.No
     modality: Qt.ApplicationModal
-    onYes: close()
-    onNo: close()
+    onAccepted: close()
     signal closeSignal()
     onVisibilityChanged: closeSignal()
 }

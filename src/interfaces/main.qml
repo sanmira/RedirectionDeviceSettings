@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.1
 import QtQuick.Controls.Styles 1.4
 
 Window {
@@ -58,14 +58,14 @@ Window {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-                    style: TextFieldStyle {
-                        renderType: Text.QtRendering
-                        background: Rectangle {
-                            radius: 2
-                            border.color: "#2A5A88"
-                            border.width: 3
-                        }
-                    }
+//                    style: TextFieldStyle {
+//                        renderType: Text.QtRendering
+//                        background: Rectangle {
+//                            radius: 2
+//                            border.color: "#2A5A88"
+//                            border.width: 3
+//                        }
+//                    }
                     onTextChanged: {
                         telNumber1 = text
                     }
@@ -77,9 +77,9 @@ Window {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-                    style: TextFieldStyle {
-                        renderType: Text.QtRendering
-                    }
+//                    style: TextFieldStyle {
+//                        renderType: Text.QtRendering
+//                    }
                     onTextChanged: {
                         telNumber2 = text
                     }
@@ -91,9 +91,9 @@ Window {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-                    style: TextFieldStyle {
-                        renderType: Text.QtRendering
-                    }
+//                    style: TextFieldStyle {
+//                        renderType: Text.QtRendering
+//                    }
                     onTextChanged: {
                         telNumber3 = text
                     }
@@ -105,9 +105,9 @@ Window {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-                    style: TextFieldStyle {
-                        renderType: Text.QtRendering
-                    }
+//                    style: TextFieldStyle {
+//                        renderType: Text.QtRendering
+//                    }
                     onTextChanged: {
                         telNumber4 = text
                     }
@@ -119,9 +119,9 @@ Window {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-                    style: TextFieldStyle {
-                        renderType: Text.QtRendering
-                    }
+//                    style: TextFieldStyle {
+//                        renderType: Text.QtRendering
+//                    }
                     onTextChanged: {
                         telNumber5 = text
                     }
@@ -166,12 +166,16 @@ Window {
     }
     property var progressbarState: false
 
+    signal onOpenButtonClicked()
     signal onRemSubClicked()
     signal onAddSubClicked()
     signal onClearTableClicked()
     signal onAddSubsClicked()
     signal onCreateButtonClicked()
     MainForm {
+        openButton.onClicked: {
+            onOpenButtonClicked()
+        }
         rem1subButton.onClicked: {
             onRemSubClicked()
         }
