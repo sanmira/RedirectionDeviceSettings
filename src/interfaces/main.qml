@@ -15,11 +15,11 @@ Window {
         id: subscribersListDelegate
         Item {
             id: wrapper
-            width: 150; height: 140
+            width: 260; height: 240
             Rectangle {
                 id: wrapperRect
                 anchors.fill: parent
-                color: "grey"
+                color: "red"
                 opacity: 0.2
                 scale: 0.8
                 MouseArea {
@@ -33,15 +33,16 @@ Window {
             Column {
                 Text {
                     font.weight: Font.Bold
+                    font.pixelSize: 20
                     text: 'Квартира: ' + flatNumber
                 }
                 spacing: 2
                 Row {
                     Text {
                         font.weight: Font.DemiBold
+                        font.pixelSize: 20
                         text: "Подключена?"
                     }
-                    spacing: 5
                     CheckBox {
                         id: checkIsEnabled
                         enabled: false

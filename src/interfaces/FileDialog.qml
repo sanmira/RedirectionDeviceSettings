@@ -5,7 +5,7 @@ FileDialog {
     id: fileDialog
     objectName: "filedialog"
     title: "Dialog"
-    folder: shortcuts.home
+    selectFolder: true
     signal acceptedSignal(url filePath)
     signal canceledSignal()
     onAccepted: {

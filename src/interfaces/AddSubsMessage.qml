@@ -18,21 +18,15 @@
 */
 
 import QtQuick 2.7
-import QtQuick.Window 2.0
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.1
 
-Window {
+MessageDialog {
     id: addSubsWindow
     objectName: "addsubs"
-    title: "Dialog"
     modality: Qt.ApplicationModal
-    maximumWidth: 210
-    minimumWidth: 210
-    maximumHeight: 110
-    minimumHeight: 110
     signal acceptedSignal(string number)
     signal canceledSignal()
-
     Column {
         anchors.fill: parent
         spacing: 7
@@ -41,12 +35,12 @@ Window {
         Row {
             spacing: 7
             Button { text: "Добавить"; onClicked: {
-                    addSubsWindow.hide()
+                    addSubsWindow.close()
                     acceptedSignal(addSubsField.text)
                 }
             }
             Button { text: "Отмена"; onClicked: {
-                    addSubsWindow.hide()
+                    addSubsWindow.close()
                     canceledSignal()
                 }
 
@@ -57,3 +51,4 @@ Window {
         canceledSignal()
     }
 }
+
