@@ -21,34 +21,40 @@ import QtQuick 2.7
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.1
 
-MessageDialog {
-    id: addSubsWindow
-    objectName: "addsubs"
-    modality: Qt.ApplicationModal
-    signal acceptedSignal(string number)
-    signal canceledSignal()
-    Column {
-        anchors.fill: parent
-        spacing: 7
-        Text { text: "Сколько абонентов добавить?"; font.weight: Font.Bold; }
-        TextField { id: addSubsField; validator: IntValidator{} inputMethodHints: Qt.ImhFormattedNumbersOnly; width: 125; maximumLength: 3 }
-        Row {
+Item {
+    width: 320
+    height: 360
+    SystemPalette { id: palette }
+    clip: true
+    MessageDialog {
+        id: addSubsWindow
+        objectName: "addsubs"
+        signal acceptedSignal(string number)
+        signal canceledSignal()
+        modality: Qt.ApplicationModal
+        Column {
+            anchors.fill: parent
             spacing: 7
-            Button { text: "Добавить"; onClicked: {
-                    addSubsWindow.close()
-                    acceptedSignal(addSubsField.text)
+            Text { text: "Сколько абонентов добавить?"; font.weight: Font.Bold; }
+            TextField { id: addSubsField; validator: IntValidator{} inputMethodHints: Qt.ImhFormattedNumbersOnly; width: 125; maximumLength: 3 }
+            Row {
+                spacing: 7
+                Button { text: "Добавить"; onClicked: {
+                        addSubsWindow.close()
+                        addSubsWindow.acceptedSignal(addSubsField.text)
+                    }
                 }
-            }
-            Button { text: "Отмена"; onClicked: {
-                    addSubsWindow.close()
-                    canceledSignal()
-                }
+                Button { text: "Отмена"; onClicked: {
+                        addSubsWindow.close()
+                        addSubsWindow.canceledSignal()
+                    }
 
+                }
             }
         }
-    }
-    onVisibleChanged: {
-        canceledSignal()
+        onVisibleChanged: {
+            canceledSignal()
+        }
     }
 }
 

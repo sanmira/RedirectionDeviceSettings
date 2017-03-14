@@ -27,7 +27,7 @@ Rectangle {
         anchors.leftMargin: 8
         anchors.top: progressBar.bottom
         anchors.topMargin: 6
-        cellHeight: 380
+        cellHeight: 400
         delegate: subscribersListDelegate
         cellWidth: 310
         model: subListModel

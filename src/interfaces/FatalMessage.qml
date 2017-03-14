@@ -20,16 +20,22 @@
 import QtQuick 2.7
 import QtQuick.Dialogs 1.2
 
-MessageDialog {
-    objectName: "error"
-    title: "Critical error"
-    icon: StandardIcon.Critical
-    modality: Qt.ApplicationModal
-    onAccepted: close()
+Item {
+    width: 320
+    height: 360
+    SystemPalette { id: palette }
+    clip: true
+    MessageDialog {
+        objectName: "error"
+        title: "Critical error"
+        icon: StandardIcon.Critical
+        modality: Qt.ApplicationModal
+        onAccepted: close()
 
-    signal closeSignal()
-    onVisibilityChanged: {
-        closeSignal()
-        Qt.quit()
+        signal closeSignal()
+        onVisibilityChanged: {
+            closeSignal()
+            Qt.quit()
+        }
     }
 }

@@ -3,13 +3,31 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Styles 1.4
 
-Window {
+ApplicationWindow {
     visible: true
-    minimumWidth: 720
-    width: 720
-    minimumHeight: 480
+    title: "System Dialogs Gallery"
+    width: 580
     height: 480
-    title: qsTr("SIM_USB_SERVICE")
+
+    FatalMessage {
+        visible: false
+    }
+
+    WarningMessage {
+        visible: false
+    }
+
+    InfoMessage {
+        visible: false
+    }
+
+    AddSubsMessage {
+        visible: false
+    }
+
+    FileDialog {
+        visible: false
+    }
 
     Component {
         id: subscribersListDelegate
@@ -39,9 +57,10 @@ Window {
                 spacing: 2
                 Row {
                     Text {
+                        id: isEnabledText
                         font.weight: Font.DemiBold
                         font.pixelSize: 20
-                        text: "Подключена?"
+                        text: "Отключена"
                     }
                     CheckBox {
                         id: checkIsEnabled
@@ -135,6 +154,7 @@ Window {
                     when: ((checkIsEnabled.checked == true) & (wrapper.GridView.isCurrentItem))
                     PropertyChanges { target: scaleTransform; scale: 1.3; }
                     PropertyChanges { target: wrapperRect; color: "green"; }
+                    PropertyChanges { target: isEnabledText; text: "Подключена"; }
                     PropertyChanges { target: checkIsEnabled; enabled: true; }
                     PropertyChanges { target: number1; enabled: true; }
                     PropertyChanges { target: number2; enabled: true; }
@@ -210,4 +230,5 @@ Window {
             progressbarState = false
         }
     }
+    Component.onCompleted: visible = true
 }

@@ -20,13 +20,19 @@
 import QtQuick 2.7
 import QtQuick.Dialogs 1.2
 
-MessageDialog {
-    objectName: "information"
-    title: "Information"
-    icon: StandardIcon.Information
-    modality: Qt.ApplicationModal
-    onAccepted: close()
+Item {
+    width: 320
+    height: 360
+    SystemPalette { id: palette }
+    clip: true
+    MessageDialog {
+        objectName: "information"
+        title: "Information"
+        icon: StandardIcon.Information
+        modality: Qt.ApplicationModal
+        onAccepted: close()
 
-    signal closeSignal()
-    onVisibilityChanged: closeSignal()
+        signal closeSignal()
+        onVisibilityChanged: closeSignal()
+    }
 }

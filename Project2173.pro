@@ -1,7 +1,8 @@
-TEMPLATE = app
-
 QT += qml quick
-CONFIG += c++11
+!no_desktop: QT += widgets
+
+QT += quick qml
+android:launchMode="singleInstance"
 
 SOURCES += src\core\main.cpp \
     src/core/mainmodel.cpp \

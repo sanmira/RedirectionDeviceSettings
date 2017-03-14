@@ -135,12 +135,7 @@ void WindowsManager::show_notification_info(const QString& message)
         {
             qWarning("Cannot show multiple notification windows at same time");
             return;
-        } else if (isInformationLoaded == false)
-        {
-            mainViewEngine->load(QUrl("qrc:/src/interfaces/InfoMessage.qml"));
-            isInformationLoaded = true;
         }
-        isNotificationInvoked = true;
 
         QObject* moduleObject;
         for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
@@ -175,12 +170,7 @@ void WindowsManager::show_notification_warning(const QString& message)
         {
             qWarning("Cannot show multiple notification windows at same time");
             return;
-        } else if (isWarningLoaded == false)
-        {
-            mainViewEngine->load(QUrl("qrc:/src/interfaces/WarningMessage.qml"));
-            isWarningLoaded = true;
         }
-        isNotificationInvoked = true;
 
         QObject* moduleObject;
         for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
@@ -215,12 +205,7 @@ void WindowsManager::show_notification_critical(const QString& message)
         {
             qWarning("Cannot show multiple notification windows at same time");
             return;
-        } else if (isErrorLoaded == false)
-        {
-            mainViewEngine->load(QUrl("qrc:/src/interfaces/FatalMessage.qml"));
-            isErrorLoaded = true;
         }
-        isNotificationInvoked = true;
 
         QObject* moduleObject;
         for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
@@ -249,39 +234,29 @@ void WindowsManager::show_add_subs_window(QObject* receiver)
     {
         qWarning("WindowsManager is not initialized");
         return;
-    } else
+    } else if (isNotificationInvoked == true)
     {
-        if (isNotificationInvoked == true)
-        {
-            qWarning("Cannot show multiple notification windows at same time");
-            return;
-        } else if (isAddSubsLoaded == false)
-        {
-            mainViewEngine->load(QUrl("qrc:/src/interfaces/AddSubsMessage.qml"));
-            for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
-            {
-                QString objectName = mainViewEngine->rootObjects().at(i)->objectName();
-                if (!objectName.compare("addsubs"))
-                {
-                    addSubsRootObject = mainViewEngine->rootObjects().at(i);
-                    break;
-                }
-            }
-            QObject::connect(addSubsRootObject, SIGNAL(acceptedSignal(const QString&)), receiver, SLOT(slot_add_subs(const QString&)));
-            isAddSubsLoaded = true;
-        }
-        isNotificationInvoked = true;
-
-        addSubsRootObject->setProperty("visible", "true");
-
-        QEventLoop localLoop;
-        QObject::connect(addSubsRootObject, SIGNAL(acceptedSignal(const QString&)), &localLoop, SLOT(quit()));
-        QObject::connect(addSubsRootObject, SIGNAL(canceledSignal()), &localLoop, SLOT(quit()));
-        localLoop.exec(QEventLoop::DialogExec);
-
-        isNotificationInvoked = false;
+        qWarning("Cannot show multiple notification windows at same time");
+        return;
     }
+    isNotificationInvoked = true;
+    if (isAddSubsLoaded == false)
+    {
+        addSubsRootObject = mainViewEngine->rootObjects().first()->findChild<QObject*>(QString("addsubs"), Qt::FindChildrenRecursively);
+        QObject::connect(addSubsRootObject, SIGNAL(acceptedSignal(const QString&)), receiver, SLOT(slot_add_subs(const QString&)));
+        isAddSubsLoaded = true;
+    }
+
+    addSubsRootObject->setProperty("visible", "true");
+
+    QEventLoop localLoop;
+    QObject::connect(addSubsRootObject, SIGNAL(acceptedSignal(const QString&)), &localLoop, SLOT(quit()));
+    QObject::connect(addSubsRootObject, SIGNAL(canceledSignal()), &localLoop, SLOT(quit()));
+    localLoop.exec(QEventLoop::DialogExec);
+
+    isNotificationInvoked = false;
 }
+
 
 void WindowsManager::show_file_dialog_window(QObject *receiver)
 {
@@ -289,36 +264,28 @@ void WindowsManager::show_file_dialog_window(QObject *receiver)
     {
         qWarning("WindowsManager is not initialized");
         return;
-    } else
+    } else if (isNotificationInvoked == true)
     {
-        if (isNotificationInvoked == true)
-        {
-            qWarning("Cannot show multiple notification windows at same time");
-            return;
-        } else if (isFileDialogLoaded == false)
-        {
-            mainViewEngine->load(QUrl("qrc:/src/interfaces/FileDialog.qml"));
-            for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
-            {
-                QString objectName = mainViewEngine->rootObjects().at(i)->objectName();
-                if (!objectName.compare("filedialog"))
-                {
-                    fileDialogObject = mainViewEngine->rootObjects().at(i);
-                    break;
-                }
-            }
-            QObject::connect(fileDialogObject, SIGNAL(acceptedSignal(const QUrl&)), receiver, SLOT(slot_file_dialog(const QUrl&)));
-            isFileDialogLoaded = true;
-        }
-        isNotificationInvoked = true;
-
-        fileDialogObject->setProperty("visible", "true");
-
-        QEventLoop localLoop;
-        QObject::connect(fileDialogObject, SIGNAL(acceptedSignal(const QUrl&)), &localLoop, SLOT(quit()));
-        QObject::connect(fileDialogObject, SIGNAL(canceledSignal()), &localLoop, SLOT(quit()));
-        localLoop.exec(QEventLoop::DialogExec);
-
-        isNotificationInvoked = false;
+        qWarning("Cannot show multiple notification windows at same time");
+        return;
     }
+
+    isNotificationInvoked = true;
+
+    if (isFileDialogLoaded == false)
+    {
+        fileDialogObject = mainViewEngine->rootObjects().first()->findChild<QObject*>(QString("filedialog"), Qt::FindChildrenRecursively);
+        QObject::connect(fileDialogObject, SIGNAL(acceptedSignal(const QUrl&)), receiver, SLOT(slot_file_dialog(const QUrl&)));
+        isFileDialogLoaded = true;
+    }
+
+    fileDialogObject->setProperty("visible", "true");
+
+    QEventLoop localLoop;
+    QObject::connect(fileDialogObject, SIGNAL(acceptedSignal(const QUrl&)), &localLoop, SLOT(quit()));
+    QObject::connect(fileDialogObject, SIGNAL(canceledSignal()), &localLoop, SLOT(quit()));
+    localLoop.exec(QEventLoop::DialogExec);
+
+    isNotificationInvoked = false;
 }
+
