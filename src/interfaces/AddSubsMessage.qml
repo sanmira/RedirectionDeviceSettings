@@ -27,32 +27,31 @@ Item {
     SystemPalette { id: palette }
     clip: true
     anchors.centerIn: parent
-    AbstractDialog {
+    Dialog {
         id: addSubsWindow
         objectName: "addsubs"
         signal acceptedSignal(string number)
         signal canceledSignal()
         modality: Qt.ApplicationModal
+        standardButtons: StandardButton.Apply | StandardButton.Cancel
+        onAccepted: {
+            addSubsWindow.close()
+            addSubsWindow.acceptedSignal(addSubsField.text)
+        }
+        onApply: {
+            addSubsWindow.close()
+            addSubsWindow.acceptedSignal(addSubsField.text)
+        }
+        onRejected: {
+            addSubsWindow.close()
+            addSubsWindow.canceledSignal()
+        }
 
         Column {
             anchors.fill: parent
             spacing: 7
             Text { text: "Сколько абонентов добавить?"; font.weight: Font.Bold; }
             TextField { id: addSubsField; validator: IntValidator{} inputMethodHints: Qt.ImhFormattedNumbersOnly; maximumLength: 3 }
-            Row {
-                spacing: 7
-
-                Button { text: "Добавить"; onClicked: {
-                        addSubsWindow.close()
-                        addSubsWindow.acceptedSignal(addSubsField.text)
-                    }
-                }
-                Button { text: "Отмена"; onClicked: {
-                        addSubsWindow.close()
-                        addSubsWindow.canceledSignal()
-                    }
-                }
-            }
         }
         onVisibleChanged: {
             canceledSignal()

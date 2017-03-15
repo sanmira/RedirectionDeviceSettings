@@ -8,6 +8,5 @@
         <file>src/interfaces/AddSubsMessage.qml</file>
         <file>src/interfaces/ProgressBar.ui.qml</file>
         <file>src/interfaces/FileDialog.qml</file>
-        <file>src/interfaces/Button.qml</file>
     </qresource>
 </RCC>

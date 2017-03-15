@@ -32,6 +32,7 @@ void FileGenerator::slot_create_file()
     if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
     {
         folderPathContainer.clear();
+        WindowsManager::show_notification_warning("Невозможно создать файл в выбранной папке!");
         busy(false);
         return;
     }
