@@ -5,30 +5,12 @@ import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
     visible: true
-    title: "System Dialogs Gallery"
-    width: 580
+    title: "UP_Settings"
+    minimumWidth: 720
+    width: 720
+    minimumHeight: 480
     height: 480
-
-    FatalMessage {
-        visible: false
-    }
-
-    WarningMessage {
-        visible: false
-    }
-
-    InfoMessage {
-        visible: false
-    }
-
-    AddSubsMessage {
-        visible: false
-    }
-
-    FileDialog {
-        visible: false
-    }
-
+    visibility: Window.Maximized
     Component {
         id: subscribersListDelegate
         Item {
@@ -78,14 +60,7 @@ ApplicationWindow {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-//                    style: TextFieldStyle {
-//                        renderType: Text.QtRendering
-//                        background: Rectangle {
-//                            radius: 2
-//                            border.color: "#2A5A88"
-//                            border.width: 3
-//                        }
-//                    }
+
                     onTextChanged: {
                         telNumber1 = text
                     }
@@ -97,9 +72,7 @@ ApplicationWindow {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-//                    style: TextFieldStyle {
-//                        renderType: Text.QtRendering
-//                    }
+
                     onTextChanged: {
                         telNumber2 = text
                     }
@@ -111,9 +84,7 @@ ApplicationWindow {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-//                    style: TextFieldStyle {
-//                        renderType: Text.QtRendering
-//                    }
+
                     onTextChanged: {
                         telNumber3 = text
                     }
@@ -125,9 +96,7 @@ ApplicationWindow {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-//                    style: TextFieldStyle {
-//                        renderType: Text.QtRendering
-//                    }
+
                     onTextChanged: {
                         telNumber4 = text
                     }
@@ -139,9 +108,7 @@ ApplicationWindow {
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
-//                    style: TextFieldStyle {
-//                        renderType: Text.QtRendering
-//                    }
+
                     onTextChanged: {
                         telNumber5 = text
                     }
@@ -172,6 +139,7 @@ ApplicationWindow {
                     name: "checked"
                     when: checkIsEnabled.checked == true
                     PropertyChanges { target: wrapperRect; color: "green"; }
+                    PropertyChanges { target: isEnabledText; text: "Подключена"; }
                 }
             ]
             transform: Scale {
@@ -230,5 +198,23 @@ ApplicationWindow {
             progressbarState = false
         }
     }
-    Component.onCompleted: visible = true
+    FatalMessage {
+        visible: false
+    }
+
+    WarningMessage {
+        visible: false
+    }
+
+    InfoMessage {
+        visible: false
+    }
+
+    AddSubsMessage {
+        visible: false
+    }
+
+    FileDialog {
+        visible: false
+    }
 }

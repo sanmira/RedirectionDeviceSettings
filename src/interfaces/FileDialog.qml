@@ -10,10 +10,14 @@ Item {
     FileDialog {
         id: fileDialog
         objectName: "filedialog"
-        signal acceptedSignal(url filePath)
+        signal file(url filePath)
+        signal folder(url folderPath)
         signal canceledSignal()
         onAccepted: {
-            fileDialog.acceptedSignal(fileDialog.fileUrl)
+            if (fileDialog.selectFolder)
+                fileDialog.folder(fileDialog.fileUrl)
+            else
+                fileDialog.file(fileDialog.fileUrl)
         }
         onRejected: {
             fileDialog.canceledSignal()

@@ -27,7 +27,7 @@ public:
     static void show_notification_critical(const QString &message);
 
     static void show_add_subs_window(QObject* receiver);
-    static void show_file_dialog_window(QObject* receiver);
+    static void show_file_dialog_window(QObject* receiver, bool isSearchForFolder);
 
 private:
     static QQmlApplicationEngine* mainViewEngine;

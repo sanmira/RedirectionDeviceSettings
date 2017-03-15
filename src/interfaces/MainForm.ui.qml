@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.1
 
 Rectangle {
@@ -6,7 +7,6 @@ Rectangle {
 
     width: 360
     height: 360
-    property alias toolSeparator: toolSeparator
     property alias openButton: openButton
     property alias rem1subButton: rem1subButton
     property alias add1subButton: add1subButton
@@ -17,76 +17,19 @@ Rectangle {
 
     GridView {
         id: gridView
-        x: 8
         y: 8
-        anchors.bottom: rem1subButton.top
+        anchors.bottom: gridLayout.top
         anchors.bottomMargin: 6
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: 9
         anchors.top: progressBar.bottom
         anchors.topMargin: 6
-        cellHeight: 400
+        cellHeight: 440
         delegate: subscribersListDelegate
-        cellWidth: 310
+        cellWidth: 315
         model: subListModel
-    }
-
-    Button {
-        id: clearButton
-        y: 414
-        height: 60
-        text: qsTr("Очистить таблицу")
-        highlighted: true
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 6
-        anchors.right: toolSeparator1.horizontalCenter
-        anchors.rightMargin: 13
-        anchors.left: toolSeparator.horizontalCenter
-        anchors.leftMargin: 13
-    }
-
-    Button {
-        id: rem1subButton
-        y: 328
-        height: 60
-        text: qsTr("-1 абонент")
-        highlighted: true
-        anchors.bottom: clearButton.top
-        anchors.bottomMargin: 26
-        anchors.right: toolSeparator1.horizontalCenter
-        anchors.rightMargin: 13
-        anchors.left: toolSeparator.horizontalCenter
-        anchors.leftMargin: 13
-    }
-
-    Button {
-        id: createButton
-        y: 328
-        height: 60
-        text: qsTr("Создать файл")
-        highlighted: true
-        anchors.bottom: openButton.top
-        anchors.bottomMargin: 26
-        anchors.right: toolSeparator.horizontalCenter
-        anchors.rightMargin: 13
-        anchors.left: parent.left
-        anchors.leftMargin: 8
-    }
-
-    Button {
-        id: openButton
-        y: 414
-        height: 60
-        text: qsTr("Открыть файл")
-        highlighted: true
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 6
-        anchors.right: toolSeparator.horizontalCenter
-        anchors.rightMargin: 13
-        anchors.left: parent.left
-        anchors.leftMargin: 8
     }
 
     ProgressBar {
@@ -100,71 +43,73 @@ Rectangle {
         anchors.rightMargin: 9
     }
 
-    Button {
-        id: add1subButton
-        y: 328
-        height: 60
-        text: qsTr("+1 абонент")
-        highlighted: true
-        anchors.bottom: addsubsButton.top
-        anchors.bottomMargin: 26
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.left: toolSeparator1.horizontalCenter
-        anchors.leftMargin: 13
-    }
-
-    Button {
-        id: addsubsButton
-        y: 414
-        height: 60
-        text: qsTr("Добавить абонентов")
-        highlighted: true
+    GridLayout {
+        id: gridLayout
+        y: 316
+        height: 156
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 6
+        anchors.bottomMargin: 8
         anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.left: toolSeparator1.horizontalCenter
-        anchors.leftMargin: 13
-    }
-
-    ToolSeparator {
-        id: toolSeparator
-        y: 328
-        height: 146
-        anchors.right: parent.horizontalCenter
-        anchors.rightMargin: 116
+        anchors.rightMargin: 9
         anchors.left: parent.left
-        anchors.leftMargin: 231
-        visible: false
-        enabled: false
-        scale: 1
-        transformOrigin: Item.Center
-        spacing: 0
-    }
+        anchors.leftMargin: 9
+        columnSpacing: 3
+        rowSpacing: 3
+        rows: 2
+        columns: 3
 
-    ToolSeparator {
-        id: toolSeparator1
-        y: 328
-        height: 146
-        anchors.left: parent.horizontalCenter
-        anchors.leftMargin: 114
-        anchors.right: parent.right
-        anchors.rightMargin: 233
-        visible: false
-        enabled: false
-        scale: 1
-        transformOrigin: Item.Center
-    }
+        Button {
+            id: createButton
+            height: 60
+            text: qsTr("Создать файл")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            highlighted: true
+        }
 
-    ToolSeparator {
-        id: toolSeparator2
-        x: 352
-        y: 50
-        width: 14
-        height: 702
-        enabled: false
-        visible: false
-        rotation: 90
+        Button {
+            id: rem1subButton
+            height: 60
+            text: qsTr("-1 абонент")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            highlighted: true
+        }
+
+        Button {
+            id: add1subButton
+            height: 60
+            text: qsTr("+1 абонент")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            highlighted: true
+        }
+
+        Button {
+            id: openButton
+            height: 60
+            text: qsTr("Открыть файл")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            highlighted: true
+        }
+
+        Button {
+            id: clearButton
+            height: 60
+            text: qsTr("Очистить таблицу")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            highlighted: true
+        }
+
+        Button {
+            id: addsubsButton
+            height: 60
+            text: qsTr("Добавить абонентов")
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            highlighted: true
+        }
     }
 }

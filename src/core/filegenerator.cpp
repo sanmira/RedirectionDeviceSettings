@@ -21,10 +21,20 @@ void FileGenerator::busy(const QVariant& state)
 void FileGenerator::slot_create_file()
 {
     busy(true);
+    WindowsManager::show_file_dialog_window(this, true);
+    if (folderPathContainer.isEmpty())
+    {
+        busy(false);
+        return;
+    }
     QGuiApplication::processEvents();
-    QFile file(QGuiApplication::applicationDirPath() + "/settings.txt");
-       if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
-           return;
+    QFile file(folderPathContainer + "/settings.txt");
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
+    {
+        folderPathContainer.clear();
+        busy(false);
+        return;
+    }
 
     QTextStream out(&file);
     out << modelHandler->getSubscribersCount() / 100 % 10 << modelHandler->getSubscribersCount() / 10 % 10 << modelHandler->getSubscribersCount() % 10;
@@ -52,24 +62,32 @@ void FileGenerator::slot_create_file()
             << sub.telNumber5().remove(" ").count() /10 % 10 << sub.telNumber5().remove(" ").count() % 10 << telNumber5 << "\n";
     }
     file.close();
+    folderPathContainer.clear();
     busy(false);
 }
 
 void FileGenerator::slot_on_open_clicked()
 {
-    WindowsManager::show_file_dialog_window(this);
+    busy(true);
+    WindowsManager::show_file_dialog_window(this, false);
     if (filePathContainer.isEmpty())
+    {
+        busy(false);
         return;
+    }
     if (!filePathContainer.contains("settings.txt"))
     {
         WindowsManager::show_notification_warning("Ошибка. Файл должен называться \"settings.txt\"");
         filePathContainer.clear();
+        busy(false);
         return;
     }
     QFile file(filePathContainer);
-    qDebug() << filePathContainer;
     if (!file.open(QIODevice::ReadOnly))
-           return;
+    {
+        busy(false);
+        return;
+    }
     modelHandler->clear_subscribers_list();
     QGuiApplication::processEvents();
     QTextStream in(&file);
@@ -121,11 +139,19 @@ void FileGenerator::slot_on_open_clicked()
     }
     file.close();
     filePathContainer.clear();
+    busy(false);
 }
 
 void FileGenerator::slot_file_dialog(const QUrl &filePath)
 {
     filePathContainer = filePath.toLocalFile();
+    qDebug() << "File path:" << filePathContainer;
+}
+
+void FileGenerator::slot_folder_dialog(const QUrl &folderPath)
+{
+    folderPathContainer = folderPath.toLocalFile();
+    qDebug() << "Folder path:" << folderPathContainer;
 }
 
 void FileGenerator::slot_on_add_subs_clicked()

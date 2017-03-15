@@ -137,16 +137,8 @@ void WindowsManager::show_notification_info(const QString& message)
             return;
         }
 
-        QObject* moduleObject;
-        for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
-        {
-            QString objectName = mainViewEngine->rootObjects().at(i)->objectName();
-            if (!objectName.compare("information"))
-            {
-                moduleObject = mainViewEngine->rootObjects().at(i);
-                break;
-            }
-        }
+        QObject* moduleObject = mainViewEngine->rootObjects().first()->findChild<QObject*>(QString("information"), Qt::FindChildrenRecursively);
+
         moduleObject->setProperty("text", message);
         moduleObject->setProperty("visible", "true");
 
@@ -172,16 +164,8 @@ void WindowsManager::show_notification_warning(const QString& message)
             return;
         }
 
-        QObject* moduleObject;
-        for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
-        {
-            QString objectName = mainViewEngine->rootObjects().at(i)->objectName();
-            if (!objectName.compare("warning"))
-            {
-                moduleObject = mainViewEngine->rootObjects().at(i);
-                break;
-            }
-        }
+        QObject* moduleObject = mainViewEngine->rootObjects().first()->findChild<QObject*>(QString("warning"), Qt::FindChildrenRecursively);
+
         moduleObject->setProperty("text", message);
         moduleObject->setProperty("visible", "true");
 
@@ -207,16 +191,8 @@ void WindowsManager::show_notification_critical(const QString& message)
             return;
         }
 
-        QObject* moduleObject;
-        for (int i = 0; i < mainViewEngine->rootObjects().count(); i++)
-        {
-            QString objectName = mainViewEngine->rootObjects().at(i)->objectName();
-            if (!objectName.compare("error"))
-            {
-                moduleObject = mainViewEngine->rootObjects().at(i);
-                break;
-            }
-        }
+        QObject* moduleObject = mainViewEngine->rootObjects().first()->findChild<QObject*>(QString("error"), Qt::FindChildrenRecursively);
+
         moduleObject->setProperty("text", message);
         moduleObject->setProperty("visible", "true");
 
@@ -248,6 +224,7 @@ void WindowsManager::show_add_subs_window(QObject* receiver)
     }
 
     addSubsRootObject->setProperty("visible", "true");
+    addSubsRootObject->setProperty("focus", "true");
 
     QEventLoop localLoop;
     QObject::connect(addSubsRootObject, SIGNAL(acceptedSignal(const QString&)), &localLoop, SLOT(quit()));
@@ -258,7 +235,7 @@ void WindowsManager::show_add_subs_window(QObject* receiver)
 }
 
 
-void WindowsManager::show_file_dialog_window(QObject *receiver)
+void WindowsManager::show_file_dialog_window(QObject *receiver, bool isSearchForFolder)
 {
     if (isWindowsManagerInitialized == false)
     {
@@ -275,14 +252,20 @@ void WindowsManager::show_file_dialog_window(QObject *receiver)
     if (isFileDialogLoaded == false)
     {
         fileDialogObject = mainViewEngine->rootObjects().first()->findChild<QObject*>(QString("filedialog"), Qt::FindChildrenRecursively);
-        QObject::connect(fileDialogObject, SIGNAL(acceptedSignal(const QUrl&)), receiver, SLOT(slot_file_dialog(const QUrl&)));
+        QObject::connect(fileDialogObject, SIGNAL(file(const QUrl&)), receiver, SLOT(slot_file_dialog(const QUrl&)));
+        QObject::connect(fileDialogObject, SIGNAL(folder(const QUrl&)), receiver, SLOT(slot_folder_dialog(const QUrl&)));
         isFileDialogLoaded = true;
     }
 
+    if (isSearchForFolder)
+        fileDialogObject->setProperty("selectFolder", "true");
+    else
+        fileDialogObject->setProperty("selectFolder", "false");
     fileDialogObject->setProperty("visible", "true");
 
     QEventLoop localLoop;
-    QObject::connect(fileDialogObject, SIGNAL(acceptedSignal(const QUrl&)), &localLoop, SLOT(quit()));
+    QObject::connect(fileDialogObject, SIGNAL(file(const QUrl&)), &localLoop, SLOT(quit()));
+    QObject::connect(fileDialogObject, SIGNAL(folder(const QUrl&)), &localLoop, SLOT(quit()));
     QObject::connect(fileDialogObject, SIGNAL(canceledSignal()), &localLoop, SLOT(quit()));
     localLoop.exec(QEventLoop::DialogExec);
 

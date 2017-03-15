@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QSurface>
 
 #include "windowsmanager.h"
 #include "mainmodel.h"
@@ -8,6 +9,13 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    if (QCoreApplication::arguments().contains(QLatin1String("--coreprofile"))) {
+        QSurfaceFormat fmt;
+        fmt.setVersion(4, 4);
+        fmt.setProfile(QSurfaceFormat::CoreProfile);
+        QSurfaceFormat::setDefaultFormat(fmt);
+    }
 
     QQmlApplicationEngine engine;
 

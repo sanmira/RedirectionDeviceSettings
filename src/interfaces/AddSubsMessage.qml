@@ -17,28 +17,31 @@
  *  along with Project1793.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import QtQuick 2.7
-import QtQuick.Dialogs 1.2
+import QtQuick 2.2
 import QtQuick.Controls 2.1
+import QtQuick.Dialogs 1.2
 
 Item {
     width: 320
     height: 360
     SystemPalette { id: palette }
     clip: true
-    MessageDialog {
+    anchors.centerIn: parent
+    AbstractDialog {
         id: addSubsWindow
         objectName: "addsubs"
         signal acceptedSignal(string number)
         signal canceledSignal()
         modality: Qt.ApplicationModal
+
         Column {
             anchors.fill: parent
             spacing: 7
             Text { text: "Сколько абонентов добавить?"; font.weight: Font.Bold; }
-            TextField { id: addSubsField; validator: IntValidator{} inputMethodHints: Qt.ImhFormattedNumbersOnly; width: 125; maximumLength: 3 }
+            TextField { id: addSubsField; validator: IntValidator{} inputMethodHints: Qt.ImhFormattedNumbersOnly; maximumLength: 3 }
             Row {
                 spacing: 7
+
                 Button { text: "Добавить"; onClicked: {
                         addSubsWindow.close()
                         addSubsWindow.acceptedSignal(addSubsField.text)
@@ -48,7 +51,6 @@ Item {
                         addSubsWindow.close()
                         addSubsWindow.canceledSignal()
                     }
-
                 }
             }
         }
