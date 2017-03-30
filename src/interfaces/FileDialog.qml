@@ -22,5 +22,10 @@ Item {
         onRejected: {
             fileDialog.canceledSignal()
         }
+        onVisibleChanged: {
+            if (!visible)
+                rootItem.forceActiveFocus()
+            canceledSignal()
+        }
     }
 }

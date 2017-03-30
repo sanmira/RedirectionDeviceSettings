@@ -22,11 +22,13 @@ import QtQuick.Controls 2.1
 import QtQuick.Dialogs 1.2
 
 Item {
+    id: addSubItem
     width: 320
     height: 360
     SystemPalette { id: palette }
     clip: true
     anchors.centerIn: parent
+
     Dialog {
         id: addSubsWindow
         objectName: "addsubs"
@@ -51,11 +53,14 @@ Item {
             anchors.fill: parent
             spacing: 7
             Text { text: "Сколько абонентов добавить?"; font.weight: Font.Bold; }
-            TextField { id: addSubsField; validator: IntValidator{} inputMethodHints: Qt.ImhFormattedNumbersOnly; maximumLength: 3 }
+            TextField { id: addSubsField; validator: IntValidator{} inputMethodHints: Qt.ImhFormattedNumbersOnly; maximumLength: 3; font.pointSize: 13 }
         }
         onVisibleChanged: {
+            if (!visible)
+                rootItem.forceActiveFocus()
             canceledSignal()
         }
     }
+
 }
 

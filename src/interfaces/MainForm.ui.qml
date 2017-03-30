@@ -7,6 +7,7 @@ Rectangle {
 
     width: 360
     height: 360
+    property alias serviceNumbers: serviceNumbers
     property alias openButton: openButton
     property alias rem1subButton: rem1subButton
     property alias add1subButton: add1subButton
@@ -34,13 +35,14 @@ Rectangle {
 
     ProgressBar {
         id: progressBar
+        height: 23
+        anchors.left: serviceNumbers.right
+        anchors.leftMargin: 6
+        anchors.right: parent.right
+        anchors.rightMargin: 10
         anchors.top: parent.top
         anchors.topMargin: 8
         indeterminate: false
-        anchors.left: parent.left
-        anchors.leftMargin: 9
-        anchors.right: parent.right
-        anchors.rightMargin: 9
     }
 
     GridLayout {
@@ -78,6 +80,7 @@ Rectangle {
 
         Button {
             id: add1subButton
+            x: 453
             height: 60
             text: qsTr("+1 абонент")
             Layout.fillHeight: true
@@ -111,5 +114,16 @@ Rectangle {
             Layout.fillWidth: true
             highlighted: true
         }
+    }
+
+    Button {
+        id: serviceNumbers
+        width: 260
+        height: 23
+        text: qsTr("Сервисные номера")
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+        anchors.top: parent.top
+        anchors.topMargin: 8
     }
 }

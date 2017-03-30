@@ -14,7 +14,7 @@ FileGenerator::FileGenerator(MainModel* model, QObject *parent) : QObject(parent
 void FileGenerator::busy(const QVariant& state)
 {
     QObject* moduleRootObject = WindowsManager::getQmlRootObjects().first();
-    QMetaObject::invokeMethod(moduleRootObject, "change_progressbar_state",
+    QMetaObject::invokeMethod(moduleRootObject, "change_ui_state",
                               Q_ARG(QVariant, state));
 }
 
