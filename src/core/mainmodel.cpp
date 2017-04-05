@@ -6,6 +6,7 @@ MainModel::MainModel(QObject *parent) : QObject(parent)
     qRegisterMetaType<Subscriber>();
 
     WindowsManager::setContextProperty("subListModel", QVariant::fromValue(&subscriberList));
+    WindowsManager::setContextProperty("servInfo", QVariant::fromValue(&servInfo));
 }
 
 void MainModel::add_new_subscriber(const Subscriber &subscriber)

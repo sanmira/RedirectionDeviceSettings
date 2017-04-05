@@ -11,12 +11,14 @@
 #include <QDebug>
 
 #include "sublistmodel.h"
+#include "serviceinfo.h"
 
 class MainModel : public QObject
 {
     Q_OBJECT
 public:
     MainModel(QObject* parent = 0);
+    ServiceInfo servInfo;
 
 private: //data
     SubListModel subscriberList;

@@ -17,6 +17,7 @@ public:
 
 private:
     MainModel* modelHandler;
+    ServiceInfo* servInfoHandler;
     QString filePathContainer;
     QString folderPathContainer;
     void busy(const QVariant &state);

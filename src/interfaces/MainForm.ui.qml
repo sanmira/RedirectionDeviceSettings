@@ -35,14 +35,21 @@ Rectangle {
 
     ProgressBar {
         id: progressBar
-        height: 23
+        height: 41
         anchors.left: serviceNumbers.right
         anchors.leftMargin: 6
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.top: parent.top
         anchors.topMargin: 8
-        indeterminate: false
+
+        Rectangle {
+            id: progressBarBorder
+            color: "#00000000"
+            anchors.fill: parent
+            border.color: "#254bff"
+            border.width: 3
+        }
     }
 
     GridLayout {
@@ -118,9 +125,10 @@ Rectangle {
 
     Button {
         id: serviceNumbers
-        width: 260
-        height: 23
+        width: 300
+        height: 41
         text: qsTr("Сервисные номера")
+        highlighted: true
         anchors.left: parent.left
         anchors.leftMargin: 8
         anchors.top: parent.top

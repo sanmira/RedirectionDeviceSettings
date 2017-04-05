@@ -10,9 +10,7 @@ ApplicationWindow {
     visible: true
     title: "UP_Settings"
     minimumWidth: 720
-    width: 720
     minimumHeight: 480
-    height: 480
     visibility: Window.Maximized
 
     property var progressbarState: false
@@ -106,6 +104,7 @@ ApplicationWindow {
                         validator: DoubleValidator { }
                         inputMethodHints: Qt.ImhDialableCharactersOnly
                         maximumLength: 20
+                        selectByMouse: true
 
                         onTextChanged: {
                             telNumber1 = text
@@ -119,6 +118,7 @@ ApplicationWindow {
                         validator: DoubleValidator { }
                         inputMethodHints: Qt.ImhDialableCharactersOnly
                         maximumLength: 20
+                        selectByMouse: true
 
                         onTextChanged: {
                             telNumber2 = text
@@ -132,6 +132,7 @@ ApplicationWindow {
                         validator: DoubleValidator { }
                         inputMethodHints: Qt.ImhDialableCharactersOnly
                         maximumLength: 20
+                        selectByMouse: true
 
                         onTextChanged: {
                             telNumber3 = text
@@ -145,6 +146,7 @@ ApplicationWindow {
                         validator: DoubleValidator { }
                         inputMethodHints: Qt.ImhDialableCharactersOnly
                         maximumLength: 20
+                        selectByMouse: true
 
                         onTextChanged: {
                             telNumber4 = text
@@ -158,6 +160,7 @@ ApplicationWindow {
                         validator: DoubleValidator { }
                         inputMethodHints: Qt.ImhDialableCharactersOnly
                         maximumLength: 20
+                        selectByMouse: true
 
                         onTextChanged: {
                             telNumber5 = text
@@ -206,42 +209,55 @@ ApplicationWindow {
 
         Menu {
             id: serviceMenu
+            width: 300
             MenuItem {
                 TextField {
                     id: serv1;
+                    width: 300
                     font.pointSize: 13
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
+                    hoverEnabled: true
+                    selectByMouse: true
+                    text: servInfo.servNum1
 
                     onTextChanged: {
-
+                        servInfo.servNum1 = serv1.text
                     }
                 }
             }
             MenuItem {
                 TextField {
                     id: serv2;
+                    width: 300
                     font.pointSize: 13
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
+                    hoverEnabled: true
+                    selectByMouse: true
+                    text: servInfo.servNum2
 
                     onTextChanged: {
-
+                        servInfo.servNum2 = serv2.text
                     }
                 }
             }
             MenuItem {
                 TextField {
                     id: serv3;
+                    width: 300
                     font.pointSize: 13
                     validator: DoubleValidator { }
                     inputMethodHints: Qt.ImhDialableCharactersOnly
                     maximumLength: 20
+                    hoverEnabled: true
+                    selectByMouse: true
+                    text: servInfo.servNum3
 
                     onTextChanged: {
-
+                        servInfo.servNum3 = serv3.text
                     }
                 }
             }
@@ -249,13 +265,15 @@ ApplicationWindow {
 
         MainForm {
             serviceNumbers.onClicked: {
-                serviceMenu.y = serviceNumbers.height
+                serviceMenu.x = 8
+                serviceMenu.y = 54
                 serviceMenu.open()
             }
 
             openButton.onClicked: {
                 onOpenButtonClicked()
             }
+
             rem1subButton.onClicked: {
                 onRemSubClicked()
             }

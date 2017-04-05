@@ -1,7 +1,8 @@
 #include "filegenerator.h"
 
 FileGenerator::FileGenerator(MainModel* model, QObject *parent) : QObject(parent),
-                                                                  modelHandler(model)
+                                                                  modelHandler(model),
+                                                                  servInfoHandler(&model->servInfo)
 {
     connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onCreateButtonClicked()), this, SLOT(slot_create_file()));
     connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onOpenButtonClicked()), this, SLOT(slot_on_open_clicked()));
@@ -38,6 +39,19 @@ void FileGenerator::slot_create_file()
     }
 
     QTextStream out(&file);
+
+    QString servNumber1 = "00000000000000000000";
+    servNumber1.replace(0, servInfoHandler->servNum1().remove(" ").count(), servInfoHandler->servNum1().remove(" "));
+    QString servNumber2 = "00000000000000000000";
+    servNumber2.replace(0, servInfoHandler->servNum2().remove(" ").count(), servInfoHandler->servNum2().remove(" "));
+    QString servNumber3 = "00000000000000000000";
+    servNumber3.replace(0, servInfoHandler->servNum3().remove(" ").count(), servInfoHandler->servNum3().remove(" "));
+
+    out << servInfoHandler->servNum1().remove(" ").count() /10 % 10 << servInfoHandler->servNum1().remove(" ").count() % 10 << servNumber1
+        << servInfoHandler->servNum2().remove(" ").count() /10 % 10 << servInfoHandler->servNum2().remove(" ").count() % 10 << servNumber2
+        << servInfoHandler->servNum3().remove(" ").count() /10 % 10 << servInfoHandler->servNum3().remove(" ").count() % 10 << servNumber3;
+    out << "\n";
+
     out << modelHandler->getSubscribersCount() / 100 % 10 << modelHandler->getSubscribersCount() / 10 % 10 << modelHandler->getSubscribersCount() % 10;
     out << "\n";
     Subscriber sub;
@@ -51,11 +65,11 @@ void FileGenerator::slot_create_file()
         QString telNumber2 = "00000000000000000000";
         telNumber2.replace(0, sub.telNumber2().remove(" ").count(), sub.telNumber2().remove(" "));
         QString telNumber3 = "00000000000000000000";
-        telNumber3.replace(0, sub.telNumber3().remove(" ").count(), sub.telNumber3()).remove(" ");
+        telNumber3.replace(0, sub.telNumber3().remove(" ").count(), sub.telNumber3().remove(" "));
         QString telNumber4 = "00000000000000000000";
-        telNumber4.replace(0, sub.telNumber4().remove(" ").count(), sub.telNumber4()).remove(" ");
+        telNumber4.replace(0, sub.telNumber4().remove(" ").count(), sub.telNumber4().remove(" "));
         QString telNumber5 = "00000000000000000000";
-        telNumber5.replace(0, sub.telNumber5().remove(" ").count(), sub.telNumber5()).remove(" ");
+        telNumber5.replace(0, sub.telNumber5().remove(" ").count(), sub.telNumber5().remove(" "));
         out << sub.telNumber1().remove(" ").count() /10 % 10 << sub.telNumber1().remove(" ").count() % 10 << telNumber1
             << sub.telNumber2().remove(" ").count() /10 % 10 << sub.telNumber2().remove(" ").count() % 10 << telNumber2
             << sub.telNumber3().remove(" ").count() /10 % 10 << sub.telNumber3().remove(" ").count() % 10 << telNumber3
@@ -92,8 +106,21 @@ void FileGenerator::slot_on_open_clicked()
     modelHandler->clear_subscribers_list();
     QGuiApplication::processEvents();
     QTextStream in(&file);
-    QString firstLine = in.readLine();
-    int subNumber = firstLine.toInt();
+
+    QString serviceInfoString = in.readLine();
+    int servNum1Digits = serviceInfoString.mid(0, 2).toInt();
+    servInfoHandler->setServNum1(serviceInfoString.mid(2, servNum1Digits));
+    int servNum2Digits = serviceInfoString.mid(22, 2).toInt();
+    servInfoHandler->setServNum2(serviceInfoString.mid(24, servNum2Digits));
+    int servNum3Digits = serviceInfoString.mid(44, 2).toInt();
+    servInfoHandler->setServNum3(serviceInfoString.mid(46, servNum3Digits));
+
+    qDebug() << servInfoHandler->servNum1();
+    qDebug() << servInfoHandler->servNum2();
+    qDebug() << servInfoHandler->servNum3();
+
+    QString secondLine = in.readLine();
+    int subNumber = secondLine.toInt();
     qDebug() << subNumber;
     for (int i = 0; i < subNumber; i++)
     {

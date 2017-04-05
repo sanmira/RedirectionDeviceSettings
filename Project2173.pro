@@ -9,7 +9,8 @@ SOURCES += src\core\main.cpp \
     src/core/windowsmanager.cpp \
     src/core/sublistmodel.cpp \
     src/core/subscriber.cpp \
-    src/core/filegenerator.cpp
+    src/core/filegenerator.cpp \
+    src/core/serviceinfo.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,4 +41,6 @@ HEADERS += \
     src/core/windowsmanager.h \
     src/core/sublistmodel.h \
     src/core/subscriber.h \
-    src/core/filegenerator.h
+    src/core/filegenerator.h \
+    include/core/serviceinfo_копия.h \
+    src/core/serviceinfo.h
