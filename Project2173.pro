@@ -42,5 +42,4 @@ HEADERS += \
     src/core/sublistmodel.h \
     src/core/subscriber.h \
     src/core/filegenerator.h \
-    include/core/serviceinfo_копия.h \
     src/core/serviceinfo.h

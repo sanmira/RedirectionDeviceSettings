@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.1
+import QtQuick.Controls 2.0
 
 Rectangle {
     id: rectangle
@@ -19,6 +19,7 @@ Rectangle {
     GridView {
         id: gridView
         y: 8
+        width: 341
         anchors.bottom: gridLayout.top
         anchors.bottomMargin: 6
         anchors.right: parent.right
@@ -27,7 +28,7 @@ Rectangle {
         anchors.leftMargin: 9
         anchors.top: progressBar.bottom
         anchors.topMargin: 6
-        cellHeight: 440
+        cellHeight: 520
         delegate: subscribersListDelegate
         cellWidth: 315
         model: subListModel

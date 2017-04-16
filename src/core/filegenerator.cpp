@@ -216,7 +216,7 @@ void FileGenerator::slot_on_add_sub_clicked()
     QGuiApplication::processEvents();
     int numOfSubs = modelHandler->getSubscribersCount();
     if (numOfSubs < 300)
-        modelHandler->add_new_subscriber(Subscriber(numOfSubs + 1, false, "", "", "", "", ""));
+        modelHandler->add_new_subscriber(Subscriber(numOfSubs + 1, true, "", "", "", "", ""));
     busy(false);
 }
 

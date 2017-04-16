@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Window 2.2
-import QtQuick.Controls 2.1
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 
@@ -71,28 +71,81 @@ ApplicationWindow {
                             wrapper.GridView.view.currentIndex = index
                         }
                     }
-
                 }
                 ColumnLayout {
-                    Text {
+                    TextInput {
                         font.weight: Font.Bold
+                        font.underline: true
                         font.pointSize: 17
                         text: 'Квартира: ' + flatNumber
                     }
                     spacing: 2
-                    RowLayout {
-                        Text {
-                            id: isEnabledText
-                            font.weight: Font.DemiBold
-                            font.pointSize: 17
-                            text: "Отключена"
+                    ColumnLayout {
+                        spacing: 10
+                        RowLayout {
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 50
+                            Layout.preferredWidth: 200
+                            Layout.maximumWidth: 200
+                            Text {
+                                id: isFlatEnabled
+                                font.pointSize: 15
+                                text: "Отключена   "
+                            }
+                            CheckBox {
+                                id: checkIsFlatEnabled
+                                enabled: false
+                                checked: isEnabled
+                                onCheckedChanged: {
+                                    isEnabled = checked
+                                }
+                            }
                         }
-                        CheckBox {
-                            id: checkIsEnabled
-                            enabled: false
-                            checked: isEnabled
-                            onCheckedChanged: {
-                                isEnabled = checked
+                        ColumnLayout {
+                            spacing: 0
+                            Text {
+                                id: readrVariants
+                                font.weight: Font.DemiBold
+                                font.pointSize: 15
+                                text: "Переадресации:"
+                            }
+                            RowLayout {
+                                Layout.fillWidth: true
+                                Layout.minimumWidth: 50
+                                Layout.preferredWidth: 180
+                                Layout.maximumWidth: 180
+                                Text {
+                                    id: isReadrEnabled
+                                    font.pointSize: 13
+                                    text: "С задержкой  "
+                                }
+                                CheckBox {
+                                    id: checkIsReadrEnabled
+                                    enabled: false
+                                    checked: false
+//                                    onCheckedChanged: {
+//                                        isEnabled = checked
+//                                    }
+                                }
+                            }
+                            RowLayout {
+                                Layout.fillWidth: true
+                                Layout.minimumWidth: 50
+                                Layout.preferredWidth: 180
+                                Layout.maximumWidth: 180
+                                Text {
+                                    id: isRelatEnabled
+                                    font.pointSize: 13
+                                    text: "Без задержки"
+                                }
+                                CheckBox {
+                                    id: checkIsRelatEnabled
+                                    enabled: false
+                                    checked: false
+//                                    onCheckedChanged: {
+//                                        isEnabled = checked
+//                                    }
+                                }
                             }
                         }
                     }
@@ -170,12 +223,14 @@ ApplicationWindow {
 
                 states: [
                     State {
-                        name: "checkedNcurrentItem"
-                        when: ((checkIsEnabled.checked == true) & (wrapper.GridView.isCurrentItem))
+                        name: "readrChecked"
+                        when: ((checkIsReadrEnabled.checked == true) & (checkIsFlatEnabled.checked == true) & (wrapper.GridView.isCurrentItem))
+                        PropertyChanges { target: checkIsRelatEnabled; enabled: false; }
                         PropertyChanges { target: scaleTransform; scale: 1.3; }
                         PropertyChanges { target: wrapperRect; color: "green"; }
-                        PropertyChanges { target: isEnabledText; text: "Подключена"; }
-                        PropertyChanges { target: checkIsEnabled; enabled: true; }
+                        PropertyChanges { target: isFlatEnabled; text: "Подключена"; }
+                        PropertyChanges { target: checkIsFlatEnabled; enabled: true; }
+                        PropertyChanges { target: checkIsReadrEnabled; enabled: true; }
                         PropertyChanges { target: number1; enabled: true; }
                         PropertyChanges { target: number2; enabled: true; }
                         PropertyChanges { target: number3; enabled: true; }
@@ -183,16 +238,41 @@ ApplicationWindow {
                         PropertyChanges { target: number5; enabled: true; }
                     },
                     State {
+                        name: "relatChecked"
+                        when: ((checkIsRelatEnabled.checked == true) & (checkIsFlatEnabled.checked == true) & (wrapper.GridView.isCurrentItem))
+                        PropertyChanges { target: checkIsReadrEnabled; enabled: false; }
+                        PropertyChanges { target: scaleTransform; scale: 1.3; }
+                        PropertyChanges { target: wrapperRect; color: "green"; }
+                        PropertyChanges { target: isFlatEnabled; text: "Подключена"; }
+                        PropertyChanges { target: checkIsFlatEnabled; enabled: true; }
+                        PropertyChanges { target: checkIsRelatEnabled; enabled: true; }
+                        PropertyChanges { target: number1; enabled: true; }
+                        PropertyChanges { target: number2; enabled: true; }
+                        PropertyChanges { target: number3; enabled: true; }
+                        PropertyChanges { target: number4; enabled: true; }
+                        PropertyChanges { target: number5; enabled: true; }
+                    },
+                    State {
+                        name: "checkedNcurrentItem"
+                        when: ((checkIsFlatEnabled.checked == true) & (wrapper.GridView.isCurrentItem))
+                        PropertyChanges { target: scaleTransform; scale: 1.3; }
+                        PropertyChanges { target: wrapperRect; color: "green"; }
+                        PropertyChanges { target: isFlatEnabled; text: "Подключена"; }
+                        PropertyChanges { target: checkIsFlatEnabled; enabled: true; }
+                        PropertyChanges { target: checkIsReadrEnabled; enabled: true; }
+                        PropertyChanges { target: checkIsRelatEnabled; enabled: true; }
+                    },
+                    State {
                         name: "currentItem"
                         when: wrapper.GridView.isCurrentItem
                         PropertyChanges { target: scaleTransform; scale: 1.3; }
-                        PropertyChanges { target: checkIsEnabled; enabled: true; }
+                        PropertyChanges { target: checkIsFlatEnabled; enabled: true; }
                     },
                     State {
                         name: "checked"
-                        when: checkIsEnabled.checked == true
+                        when: checkIsFlatEnabled.checked == true
                         PropertyChanges { target: wrapperRect; color: "green"; }
-                        PropertyChanges { target: isEnabledText; text: "Подключена"; }
+                        PropertyChanges { target: isFlatEnabled; text: "Подключена"; }
                     }
                 ]
                 transform: Scale {
