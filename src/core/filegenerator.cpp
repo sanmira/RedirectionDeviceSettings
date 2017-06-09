@@ -3,28 +3,14 @@
 FileGenerator::FileGenerator(MainModel* model, QObject *parent) : QObject(parent),
                                                                   modelHandler(model)
 {
-    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onCreateButtonClicked()), this, SLOT(slot_create_file()));
-    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onOpenButtonClicked()), this, SLOT(slot_on_open_clicked()));
-    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onAddSubsClicked()), this, SLOT(slot_on_add_subs_clicked()));
-    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onClearTableClicked()), this, SLOT(slot_on_clear_table_clicked()));
-    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onAddSubClicked()), this, SLOT(slot_on_add_sub_clicked()));
-    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(onRemSubClicked()), this, SLOT(slot_on_rem_sub_clicked()));
-}
-
-void FileGenerator::busy(const QVariant& state)
-{
-    QObject* moduleRootObject = WindowsManager::getQmlRootObjects().first();
-    QMetaObject::invokeMethod(moduleRootObject, "change_progressbar_state",
-                              Q_ARG(QVariant, state));
+    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(createFile()), this, SLOT(slot_create_file()));
+    connect(WindowsManager::getQmlRootObjects().first(), SIGNAL(openFile()), this, SLOT(slot_on_open_clicked()));
 }
 
 void FileGenerator::slot_create_file()
 {
-    busy(true);
-    WindowsManager::show_file_dialog_window(this, true);
     if (folderPathContainer.isEmpty())
     {
-        busy(false);
         return;
     }
     QGuiApplication::processEvents();
@@ -32,8 +18,6 @@ void FileGenerator::slot_create_file()
     if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
     {
         folderPathContainer.clear();
-        WindowsManager::show_notification_warning("Невозможно создать файл в выбранной папке!");
-        busy(false);
         return;
     }
 
@@ -64,29 +48,24 @@ void FileGenerator::slot_create_file()
     }
     file.close();
     folderPathContainer.clear();
-    busy(false);
 }
 
 void FileGenerator::slot_on_open_clicked()
 {
-    busy(true);
-    WindowsManager::show_file_dialog_window(this, false);
+    //WindowsManager::show_file_dialog_window(this, false);
     if (filePathContainer.isEmpty())
     {
-        busy(false);
         return;
     }
     if (!filePathContainer.contains("settings.txt"))
     {
-        WindowsManager::show_notification_warning("Ошибка. Файл должен называться \"settings.txt\"");
+        //WindowsManager::show_notification_warning("Ошибка. Файл должен называться \"settings.txt\"");
         filePathContainer.clear();
-        busy(false);
         return;
     }
     QFile file(filePathContainer);
     if (!file.open(QIODevice::ReadOnly))
     {
-        busy(false);
         return;
     }
     modelHandler->clear_subscribers_list();
@@ -140,65 +119,4 @@ void FileGenerator::slot_on_open_clicked()
     }
     file.close();
     filePathContainer.clear();
-    busy(false);
-}
-
-void FileGenerator::slot_file_dialog(const QUrl &filePath)
-{
-    filePathContainer = filePath.toLocalFile();
-    qDebug() << "File path:" << filePathContainer;
-}
-
-void FileGenerator::slot_folder_dialog(const QUrl &folderPath)
-{
-    folderPathContainer = folderPath.toLocalFile();
-    qDebug() << "Folder path:" << folderPathContainer;
-}
-
-void FileGenerator::slot_on_add_subs_clicked()
-{
-    WindowsManager::show_add_subs_window(this);
-}
-
-void FileGenerator::slot_add_subs(const QString& number)
-{
-    busy(true);
-    QGuiApplication::processEvents();
-    int startNumOfSubs = modelHandler->getSubscribersCount();
-    int currentNumOfSubs = modelHandler->getSubscribersCount();
-    for (int i = 0; (i < number.toInt()) && (currentNumOfSubs < 300); i++)
-    {
-        QGuiApplication::processEvents();
-        modelHandler->add_new_subscriber(Subscriber(startNumOfSubs + i + 1, false, "", "", "", "", ""));
-        currentNumOfSubs = modelHandler->getSubscribersCount();
-    }
-    busy(false);
-}
-
-void FileGenerator::slot_on_clear_table_clicked()
-{
-    busy(true);
-    QGuiApplication::processEvents();
-    modelHandler->clear_subscribers_list();
-    busy(false);
-}
-
-void FileGenerator::slot_on_add_sub_clicked()
-{
-    busy(true);
-    QGuiApplication::processEvents();
-    int numOfSubs = modelHandler->getSubscribersCount();
-    if (numOfSubs < 300)
-        modelHandler->add_new_subscriber(Subscriber(numOfSubs + 1, false, "", "", "", "", ""));
-    busy(false);
-}
-
-void FileGenerator::slot_on_rem_sub_clicked()
-{
-    busy(true);
-    QGuiApplication::processEvents();
-    int numOfSubs = modelHandler->getSubscribersCount();
-    if (numOfSubs > 0)
-        modelHandler->remove_last_subscriber();
-    busy(false);
 }

@@ -8,17 +8,13 @@ Rectangle {
     width: 360
     height: 360
     property alias openButton: openButton
-    property alias rem1subButton: rem1subButton
-    property alias add1subButton: add1subButton
-    property alias clearButton: clearButton
     property alias progressBar: progressBar
-    property alias addsubsButton: addsubsButton
     property alias createButton: createButton
 
     GridView {
         id: gridView
         y: 8
-        anchors.bottom: gridLayout.top
+        anchors.bottom: rowLayout.top
         anchors.bottomMargin: 6
         anchors.right: parent.right
         anchors.rightMargin: 10
@@ -43,73 +39,56 @@ Rectangle {
         anchors.rightMargin: 9
     }
 
-    GridLayout {
-        id: gridLayout
-        y: 316
-        height: 156
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 8
-        anchors.right: parent.right
-        anchors.rightMargin: 9
+    RowLayout {
+        id: rowLayout
+        y: 373
+        height: 99
         anchors.left: parent.left
         anchors.leftMargin: 9
-        columnSpacing: 3
-        rowSpacing: 3
-        rows: 2
-        columns: 3
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
 
         Button {
             id: createButton
             height: 60
-            text: qsTr("Создать файл")
+            text: qsTr("Создать")
+            font.family: "Tahoma"
+            font.pointSize: 25
             Layout.fillHeight: true
             Layout.fillWidth: true
-            highlighted: true
-        }
-
-        Button {
-            id: rem1subButton
-            height: 60
-            text: qsTr("-1 абонент")
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            highlighted: true
-        }
-
-        Button {
-            id: add1subButton
-            height: 60
-            text: qsTr("+1 абонент")
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            highlighted: true
+            highlighted: false
         }
 
         Button {
             id: openButton
             height: 60
-            text: qsTr("Открыть файл")
+            text: qsTr("Открыть")
+            font.family: "Tahoma"
+            font.pointSize: 25
             Layout.fillHeight: true
             Layout.fillWidth: true
-            highlighted: true
+            highlighted: false
+        }
+
+        TextField {
+            id: textField
+            text: qsTr("312")
+            horizontalAlignment: Text.AlignHCenter
+            font.family: "Tahoma"
+            font.pointSize: 36
+            Layout.fillHeight: true
+            Layout.fillWidth: false
         }
 
         Button {
-            id: clearButton
-            height: 60
-            text: qsTr("Очистить таблицу")
+            id: button
+            text: qsTr("Применить")
+            font.family: "Tahoma"
+            font.pointSize: 25
             Layout.fillHeight: true
             Layout.fillWidth: true
-            highlighted: true
-        }
-
-        Button {
-            id: addsubsButton
-            height: 60
-            text: qsTr("Добавить абонентов")
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            highlighted: true
         }
     }
 }

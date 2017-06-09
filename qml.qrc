@@ -1,12 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>src/interfaces/FatalMessage.qml</file>
-        <file>src/interfaces/InfoMessage.qml</file>
         <file>src/interfaces/main.qml</file>
         <file>src/interfaces/MainForm.ui.qml</file>
-        <file>src/interfaces/WarningMessage.qml</file>
-        <file>src/interfaces/AddSubsMessage.qml</file>
-        <file>src/interfaces/ProgressBar.ui.qml</file>
-        <file>src/interfaces/FileDialog.qml</file>
+        <file>src/interfaces/DirectoryManager.qml</file>
+        <file>src/interfaces/SubscriberItem.qml</file>
     </qresource>
 </RCC>
