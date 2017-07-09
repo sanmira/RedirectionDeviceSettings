@@ -2,15 +2,21 @@ QT += qml quick
 !no_desktop: QT += widgets
 
 QT += quick qml
+#QT += androidextras
 android:launchMode="singleInstance"
 
-SOURCES += src\core\main.cpp \
-    src/core/mainmodel.cpp \
-    src/core/windowsmanager.cpp \
+SOURCES += src/core/main.cpp \
     src/core/sublistmodel.cpp \
     src/core/subscriber.cpp \
     src/core/filegenerator.cpp \
+<<<<<<< HEAD
     src/core/serviceinfo.cpp
+=======
+    src/core/modelsmanager.cpp \
+    src/core/storage.cpp \
+    src/core/storagelistmodel.cpp \
+    src/core/datastatusinterface.cpp
+>>>>>>> origin/RedirectionSystemSettings
 
 RESOURCES += qml.qrc
 
@@ -37,9 +43,25 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    src/core/mainmodel.h \
-    src/core/windowsmanager.h \
     src/core/sublistmodel.h \
     src/core/subscriber.h \
     src/core/filegenerator.h \
+<<<<<<< HEAD
     src/core/serviceinfo.h
+=======
+    src/core/modelsmanager.h \
+    src/core/storage.h \
+    src/core/storagelistmodel.h \
+    src/core/datastatusinterface.h
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+>>>>>>> origin/RedirectionSystemSettings

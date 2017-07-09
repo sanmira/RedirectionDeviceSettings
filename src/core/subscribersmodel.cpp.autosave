@@ -1,12 +1,14 @@
-#include "mainmodel.h"
-#include "windowsmanager.h"
+#include "subscribersmodel.h"
 
 MainModel::MainModel(QObject *parent) : QObject(parent)
 {
     qRegisterMetaType<Subscriber>();
+<<<<<<< HEAD:src/core/mainmodel.cpp
 
     WindowsManager::setContextProperty("subListModel", QVariant::fromValue(&subscriberList));
     WindowsManager::setContextProperty("servInfo", QVariant::fromValue(&servInfo));
+=======
+>>>>>>> origin/RedirectionSystemSettings:src/core/subscribersmodel.cpp.autosave
 }
 
 void MainModel::add_new_subscriber(const Subscriber &subscriber)

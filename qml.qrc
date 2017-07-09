@@ -1,11 +1,25 @@
 <RCC>
     <qresource prefix="/">
-        <file>src/interfaces/FatalMessage.qml</file>
-        <file>src/interfaces/InfoMessage.qml</file>
         <file>src/interfaces/main.qml</file>
+<<<<<<< HEAD
         <file>src/interfaces/MainForm.ui.qml</file>
         <file>src/interfaces/WarningMessage.qml</file>
         <file>src/interfaces/AddSubsMessage.qml</file>
         <file>src/interfaces/FileDialog.qml</file>
+=======
+        <file>src/interfaces/MainForm.qml</file>
+        <file>src/interfaces/StorageItem.qml</file>
+        <file>src/interfaces/SubscriberItem.qml</file>
+        <file>src/interfaces/images/download-arrow.png</file>
+        <file>src/interfaces/images/floppy-disk-save-button.png</file>
+        <file>src/interfaces/images/round-done-button.png</file>
+        <file>src/interfaces/images/hard-disk-outline.png</file>
+        <file>src/interfaces/images/smartphone-outline.png</file>
+        <file>src/interfaces/images/hourglass.png</file>
+        <file>src/interfaces/images/file.png</file>
+        <file>src/interfaces/images/sync-circular-arrows.png</file>
+        <file>src/interfaces/images/ok-appproval-acceptance.png</file>
+        <file>src/interfaces/images/completed-tasks.png</file>
+>>>>>>> origin/RedirectionSystemSettings
     </qresource>
 </RCC>

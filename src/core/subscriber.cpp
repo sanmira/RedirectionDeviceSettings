@@ -7,12 +7,14 @@ Subscriber::Subscriber()
 
 Subscriber::Subscriber(const int     &flatNumber,
                        const bool    &isEnabled,
+                       const bool    &isDirectRedirectionEnabled,
                        const QString &telNumber1,
                        const QString &telNumber2,
                        const QString &telNumber3,
                        const QString &telNumber4,
                        const QString &telNumber5) : m_flatNumber(flatNumber),
                                                      m_isEnabled(isEnabled),
+                                                     m_isDirectRedirectionEnabled(isDirectRedirectionEnabled),
                                                      m_telNumber1(telNumber1),
                                                      m_telNumber2(telNumber2),
                                                      m_telNumber3(telNumber3),
@@ -30,6 +32,11 @@ int Subscriber::flatNumber() const
 bool    Subscriber::isEnabled() const
 {
     return m_isEnabled;
+}
+
+bool    Subscriber::isDirectRedirectionEnabled() const
+{
+    return m_isDirectRedirectionEnabled;
 }
 
 QString Subscriber::telNumber1() const

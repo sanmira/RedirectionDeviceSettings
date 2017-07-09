@@ -1,31 +1,29 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QSurface>
 
-#include "windowsmanager.h"
-#include "mainmodel.h"
+#include "modelsmanager.h"
 #include "filegenerator.h"
 
 int main(int argc, char *argv[])
 {
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-
-    if (QCoreApplication::arguments().contains(QLatin1String("--coreprofile"))) {
-        QSurfaceFormat fmt;
-        fmt.setVersion(4, 4);
-        fmt.setProfile(QSurfaceFormat::CoreProfile);
-        QSurfaceFormat::setDefaultFormat(fmt);
-    }
 
     QQmlApplicationEngine engine;
 
-    WindowsManager winmanager;
-    winmanager.initialize(engine);
-    MainModel model;
+    ModelsManager model;
+    FileGenerator fgen(&model);
 
-    winmanager.load_main_view(QStringLiteral("qrc:/src/interfaces/main.qml"));
+    engine.rootContext()->setContextProperty("subListModel", QVariant::fromValue(&model.subscribersList));
+    engine.rootContext()->setContextProperty("storagesListModel", QVariant::fromValue(&model.storagesList));
+    engine.rootContext()->setContextProperty("dataStatusInterface", QVariant::fromValue(&fgen.dataIface));
 
-    FileGenerator fGen(&model);
+    engine.load(QStringLiteral("qrc:/src/interfaces/main.qml"));
+
+    QObject::connect(engine.rootObjects().first(), SIGNAL(applySubscribersCount(QString)), &fgen, SLOT(slot_set_subscribers(QString)));
+    QObject::connect(engine.rootObjects().first(), SIGNAL(refreshStorages()), &fgen, SLOT(refresh_storages_list()));
+    QObject::connect(engine.rootObjects().first(), SIGNAL(createFile(QString)), &fgen, SLOT(slot_create_file(QString)));
+    QObject::connect(engine.rootObjects().first(), SIGNAL(openFile(QString)), &fgen, SLOT(slot_open_file(QString)));
 
     return app.exec();
 }
