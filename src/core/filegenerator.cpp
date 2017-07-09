@@ -4,39 +4,15 @@
 //    #include <QAndroidJniObject>
 //#endif
 
-<<<<<<< HEAD
-FileGenerator::FileGenerator(MainModel* model, QObject *parent) : QObject(parent),
-                                                                  modelHandler(model),
-                                                                  servInfoHandler(&model->servInfo)
-=======
 FileGenerator::FileGenerator(ModelsManager* model, QObject *parent) : QObject(parent),
                                                                   modelHandler(model)
->>>>>>> origin/RedirectionSystemSettings
 {
+
 }
 
 void FileGenerator::slot_create_file(QString filePath)
 {
-<<<<<<< HEAD
-    QObject* moduleRootObject = WindowsManager::getQmlRootObjects().first();
-    QMetaObject::invokeMethod(moduleRootObject, "change_ui_state",
-                              Q_ARG(QVariant, state));
-}
-
-void FileGenerator::slot_create_file()
-{
-    busy(true);
-    WindowsManager::show_file_dialog_window(this, true);
-    if (folderPathContainer.isEmpty())
-    {
-        busy(false);
-        return;
-    }
-    QGuiApplication::processEvents();
-    QFile file(folderPathContainer + "/settings.txt");
-=======
     QFile file(filePath + "/settings.txt");
->>>>>>> origin/RedirectionSystemSettings
     if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text))
     {
         dataIface.setReadWriteStatus(0);
@@ -44,18 +20,6 @@ void FileGenerator::slot_create_file()
     }
 
     QTextStream out(&file);
-
-    QString servNumber1 = "00000000000000000000";
-    servNumber1.replace(0, servInfoHandler->servNum1().remove(" ").count(), servInfoHandler->servNum1().remove(" "));
-    QString servNumber2 = "00000000000000000000";
-    servNumber2.replace(0, servInfoHandler->servNum2().remove(" ").count(), servInfoHandler->servNum2().remove(" "));
-    QString servNumber3 = "00000000000000000000";
-    servNumber3.replace(0, servInfoHandler->servNum3().remove(" ").count(), servInfoHandler->servNum3().remove(" "));
-
-    out << servInfoHandler->servNum1().remove(" ").count() /10 % 10 << servInfoHandler->servNum1().remove(" ").count() % 10 << servNumber1
-        << servInfoHandler->servNum2().remove(" ").count() /10 % 10 << servInfoHandler->servNum2().remove(" ").count() % 10 << servNumber2
-        << servInfoHandler->servNum3().remove(" ").count() /10 % 10 << servInfoHandler->servNum3().remove(" ").count() % 10 << servNumber3;
-    out << "\n";
 
     out << modelHandler->getSubscribersCount() / 100 % 10 << modelHandler->getSubscribersCount() / 10 % 10 << modelHandler->getSubscribersCount() % 10;
     out << "\n";
@@ -96,27 +60,8 @@ void FileGenerator::slot_open_file(QString filePath)
     }
     modelHandler->clear_subscribers_list();
     QTextStream in(&file);
-<<<<<<< HEAD
-
-    QString serviceInfoString = in.readLine();
-    int servNum1Digits = serviceInfoString.mid(0, 2).toInt();
-    servInfoHandler->setServNum1(serviceInfoString.mid(2, servNum1Digits));
-    int servNum2Digits = serviceInfoString.mid(22, 2).toInt();
-    servInfoHandler->setServNum2(serviceInfoString.mid(24, servNum2Digits));
-    int servNum3Digits = serviceInfoString.mid(44, 2).toInt();
-    servInfoHandler->setServNum3(serviceInfoString.mid(46, servNum3Digits));
-
-    qDebug() << servInfoHandler->servNum1();
-    qDebug() << servInfoHandler->servNum2();
-    qDebug() << servInfoHandler->servNum3();
-
-    QString secondLine = in.readLine();
-    int subNumber = secondLine.toInt();
-    qDebug() << subNumber;
-=======
     QString firstLine = in.readLine();
     int subNumber = firstLine.toInt();
->>>>>>> origin/RedirectionSystemSettings
     for (int i = 0; i < subNumber; i++)
     {
         QString line = in.readLine();
@@ -190,32 +135,6 @@ void FileGenerator::slot_set_subscribers(QString subscribersCount)
 
 void FileGenerator::refresh_storages_list()
 {
-<<<<<<< HEAD
-    busy(true);
-    QGuiApplication::processEvents();
-    modelHandler->clear_subscribers_list();
-    busy(false);
-}
-
-void FileGenerator::slot_on_add_sub_clicked()
-{
-    busy(true);
-    QGuiApplication::processEvents();
-    int numOfSubs = modelHandler->getSubscribersCount();
-    if (numOfSubs < 300)
-        modelHandler->add_new_subscriber(Subscriber(numOfSubs + 1, true, "", "", "", "", ""));
-    busy(false);
-}
-
-void FileGenerator::slot_on_rem_sub_clicked()
-{
-    busy(true);
-    QGuiApplication::processEvents();
-    int numOfSubs = modelHandler->getSubscribersCount();
-    if (numOfSubs > 0)
-        modelHandler->remove_last_subscriber();
-    busy(false);
-=======
 //#ifdef Q_OS_ANDROID
 //    modelHandler->clear_storages_list();
 //    QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
@@ -237,5 +156,4 @@ void FileGenerator::slot_on_rem_sub_clicked()
         }
     }
 //#endif
->>>>>>> origin/RedirectionSystemSettings
 }

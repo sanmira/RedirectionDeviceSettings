@@ -1,7 +1,6 @@
 QT += qml quick
 !no_desktop: QT += widgets
 
-QT += quick qml
 #QT += androidextras
 android:launchMode="singleInstance"
 
@@ -9,14 +8,11 @@ SOURCES += src/core/main.cpp \
     src/core/sublistmodel.cpp \
     src/core/subscriber.cpp \
     src/core/filegenerator.cpp \
-<<<<<<< HEAD
-    src/core/serviceinfo.cpp
-=======
+    src/core/serviceinfo.cpp \
     src/core/modelsmanager.cpp \
     src/core/storage.cpp \
     src/core/storagelistmodel.cpp \
     src/core/datastatusinterface.cpp
->>>>>>> origin/RedirectionSystemSettings
 
 RESOURCES += qml.qrc
 
@@ -46,9 +42,7 @@ HEADERS += \
     src/core/sublistmodel.h \
     src/core/subscriber.h \
     src/core/filegenerator.h \
-<<<<<<< HEAD
-    src/core/serviceinfo.h
-=======
+    src/core/serviceinfo.h \
     src/core/modelsmanager.h \
     src/core/storage.h \
     src/core/storagelistmodel.h \
@@ -64,4 +58,3 @@ DISTFILES += \
     android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
->>>>>>> origin/RedirectionSystemSettings

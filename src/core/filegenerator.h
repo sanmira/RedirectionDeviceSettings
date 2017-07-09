@@ -18,15 +18,7 @@ public:
     explicit FileGenerator(ModelsManager *model, QObject *parent = 0);
 
 private:
-<<<<<<< HEAD
-    MainModel* modelHandler;
-    ServiceInfo* servInfoHandler;
-    QString filePathContainer;
-    QString folderPathContainer;
-    void busy(const QVariant &state);
-=======
     ModelsManager* modelHandler;
->>>>>>> origin/RedirectionSystemSettings
 
 public:
     DataStatusInterface dataIface;

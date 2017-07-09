@@ -11,22 +11,13 @@
 #include <QDebug>
 
 #include "sublistmodel.h"
-<<<<<<< HEAD:src/core/mainmodel.h
-#include "serviceinfo.h"
-=======
 #include "storagelistmodel.h"
->>>>>>> origin/RedirectionSystemSettings:src/core/modelsmanager.h
 
 class ModelsManager : public QObject
 {
     Q_OBJECT
 public:
-<<<<<<< HEAD:src/core/mainmodel.h
-    MainModel(QObject* parent = 0);
-    ServiceInfo servInfo;
-=======
     ModelsManager(QObject* parent = 0);
->>>>>>> origin/RedirectionSystemSettings:src/core/modelsmanager.h
 
 public: //data
     SubListModel subscribersList;
