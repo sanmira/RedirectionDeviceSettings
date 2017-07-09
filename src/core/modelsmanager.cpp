@@ -1,34 +1,53 @@
-#include "mainmodel.h"
-#include "windowsmanager.h"
+#include "modelsmanager.h"
 
-MainModel::MainModel(QObject *parent) : QObject(parent)
+ModelsManager::ModelsManager(QObject *parent) : QObject(parent)
 {
     qRegisterMetaType<Subscriber>();
-
-    WindowsManager::setContextProperty("subListModel", QVariant::fromValue(&subscriberList));
+    qRegisterMetaType<Storage>();
 }
 
-void MainModel::add_new_subscriber(const Subscriber &subscriber)
+void ModelsManager::add_new_subscriber(const Subscriber &subscriber)
 {
-    subscriberList.addSubscriber(subscriber);
+    subscribersList.addSubscriber(subscriber);
 }
 
-Subscriber MainModel::getSubscriber(int number)
+void ModelsManager::remove_last_subscriber()
 {
-    return subscriberList.getSubscriber(number);
+    subscribersList.removeLastSub();
 }
 
-int MainModel::getSubscribersCount()
+Subscriber ModelsManager::getSubscriber(int number)
 {
-    return subscriberList.getSubCount();
+    return subscribersList.getSubscriber(number);
 }
 
-void MainModel::remove_last_subscriber()
+int ModelsManager::getSubscribersCount()
 {
-    subscriberList.removeLastSub();
+    return subscribersList.getSubCount();
 }
 
-void MainModel::clear_subscribers_list()
+void ModelsManager::clear_subscribers_list()
 {
-    subscriberList.clearList();
+    subscribersList.clearList();
 }
+
+void ModelsManager::add_new_storage(const Storage &storage)
+{
+    storagesList.addStorage(storage);
+}
+
+Storage ModelsManager::getStorage(int number)
+{
+    return storagesList.getStorage(number);
+}
+
+int ModelsManager::getStoragesCount()
+{
+    return storagesList.getStoragesCount();
+}
+
+void ModelsManager::clear_storages_list()
+{
+    storagesList.clearList();
+}
+

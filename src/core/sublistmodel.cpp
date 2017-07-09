@@ -1,6 +1,6 @@
 #include "sublistmodel.h"
 
-SubListModel::SubListModel(QObject *parent) : QAbstractListModel(parent)
+SubListModel::SubListModel(QObject *parent) : QAbstractListModel(parent), m_subCountInModel(0)
 {
 
 }
@@ -10,6 +10,15 @@ void SubListModel::addSubscriber(const Subscriber &subscriber)
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     subscriberList << subscriber;
     endInsertRows();
+    setSubCountInModel(subCountInModel() + 1);
+}
+
+void SubListModel::removeLastSub()
+{
+    beginRemoveRows(QModelIndex(), subscriberList.count() - 1, subscriberList.count() - 1);
+    subscriberList.removeLast();
+    endRemoveRows();
+    setSubCountInModel(subCountInModel() - 1);
 }
 
 Subscriber SubListModel::getSubscriber(int number)
@@ -22,18 +31,12 @@ int SubListModel::getSubCount()
     return subscriberList.count();
 }
 
-void SubListModel::removeLastSub()
-{
-    beginResetModel();
-    subscriberList.removeLast();
-    endResetModel();
-}
-
 void SubListModel::clearList()
 {
     beginResetModel();
     subscriberList.clear();
     endResetModel();
+    setSubCountInModel(0);
 }
 
 int SubListModel::rowCount(const QModelIndex &parent) const
@@ -51,6 +54,8 @@ QVariant SubListModel::data(const QModelIndex &index, int role) const
         return subscriber.flatNumber();
     else if (role == IsEnabled)
         return subscriber.isEnabled();
+    else if (role == IsDirectRedirectionEnabled)
+        return subscriber.isDirectRedirectionEnabled();
     else if (role == TelNumber1)
         return subscriber.telNumber1();
     else if (role == TelNumber2)
@@ -75,6 +80,11 @@ bool SubListModel::setData(const QModelIndex &index, const QVariant &value, int 
     else if (role == IsEnabled)
     {
         subscriber.m_isEnabled = value.toBool();
+        return true;
+    }
+    else if (role == IsDirectRedirectionEnabled)
+    {
+        subscriber.m_isDirectRedirectionEnabled = value.toBool();
         return true;
     }
     else if (role == TelNumber1)
@@ -109,12 +119,13 @@ bool SubListModel::setData(const QModelIndex &index, const QVariant &value, int 
 QHash<int, QByteArray> SubListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[FlatNumber] = "flatNumber";
-    roles[IsEnabled]  = "isEnabled";
-    roles[TelNumber1] = "telNumber1";
-    roles[TelNumber2] = "telNumber2";
-    roles[TelNumber3] = "telNumber3";
-    roles[TelNumber4] = "telNumber4";
-    roles[TelNumber5] = "telNumber5";
+    roles[FlatNumber]                 = "flatNumber";
+    roles[IsEnabled]                  = "isEnabled";
+    roles[IsDirectRedirectionEnabled] = "isDirectRedirectionEnabled";
+    roles[TelNumber1]                 = "telNumber1";
+    roles[TelNumber2]                 = "telNumber2";
+    roles[TelNumber3]                 = "telNumber3";
+    roles[TelNumber4]                 = "telNumber4";
+    roles[TelNumber5]                 = "telNumber5";
     return roles;
 }

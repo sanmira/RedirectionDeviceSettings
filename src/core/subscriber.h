@@ -1,7 +1,6 @@
 #ifndef SUBSCRIBER_H
 #define SUBSCRIBER_H
 
-
 #include <QObject>
 #include <QString>
 
@@ -11,6 +10,7 @@ public:
     Subscriber();
     Subscriber(const int     &flatNumber,
                const bool    &isEnabled,
+               const bool    &isDirectRedirectionEnabled,
                const QString &telNumber1,
                const QString &telNumber2,
                const QString &telNumber3,
@@ -19,6 +19,7 @@ public:
 
     int     flatNumber() const;
     bool    isEnabled()  const;
+    bool    isDirectRedirectionEnabled() const;
     QString telNumber1() const;
     QString telNumber2() const;
     QString telNumber3() const;
@@ -28,6 +29,7 @@ public:
 public:
     int     m_flatNumber;
     bool    m_isEnabled;
+    bool    m_isDirectRedirectionEnabled;
     QString m_telNumber1;
     QString m_telNumber2;
     QString m_telNumber3;
