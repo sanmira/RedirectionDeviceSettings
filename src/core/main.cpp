@@ -11,19 +11,25 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    ModelsManager model;
-    FileGenerator fgen(&model);
+    ModelsManager::instance().initialize_models();
+    FileGenerator fgen;
 
-    engine.rootContext()->setContextProperty("subListModel", QVariant::fromValue(&model.subscribersList));
-    engine.rootContext()->setContextProperty("storagesListModel", QVariant::fromValue(&model.storagesList));
-    engine.rootContext()->setContextProperty("dataStatusInterface", QVariant::fromValue(&fgen.dataIface));
+    engine.rootContext()->setContextProperty("subListModel", QVariant::fromValue(ModelsManager::instance().get_sublist_model()));
+    engine.rootContext()->setContextProperty("storagesListModel", QVariant::fromValue(ModelsManager::instance().get_storagelist_model()));
+    engine.rootContext()->setContextProperty("dataStatusInterface", QVariant::fromValue(&DataStatusInterface::instance()));
 
     engine.load(QStringLiteral("qrc:/src/interfaces/main.qml"));
 
-    QObject::connect(engine.rootObjects().first(), SIGNAL(applySubscribersCount(QString)), &fgen, SLOT(slot_set_subscribers(QString)));
-    QObject::connect(engine.rootObjects().first(), SIGNAL(refreshStorages()), &fgen, SLOT(refresh_storages_list()));
-    QObject::connect(engine.rootObjects().first(), SIGNAL(createFile(QString)), &fgen, SLOT(slot_create_file(QString)));
-    QObject::connect(engine.rootObjects().first(), SIGNAL(openFile(QString)), &fgen, SLOT(slot_open_file(QString)));
+#ifdef Q_OS_ANDROID
+    QObject::connect(engine.rootObjects().first(), SIGNAL(create_file()), &fgen, SLOT(save_subscribers_to_file()));
+    QObject::connect(engine.rootObjects().first(), SIGNAL(open_file()), &fgen, SLOT(load_subscribers_from_file()));
+#else
+    QObject::connect(engine.rootObjects().first(), SIGNAL(create_file()), &fgen, SLOT(desktop_refresh_storages_list()));
+    QObject::connect(engine.rootObjects().first(), SIGNAL(open_file()), &fgen, SLOT(desktop_refresh_storages_list()));
+    QObject::connect(engine.rootObjects().first(), SIGNAL(desktop_create_file(QString)), &fgen, SLOT(desktop_create_file(QString)));
+    QObject::connect(engine.rootObjects().first(), SIGNAL(desktop_open_file(QString)), &fgen, SLOT(desktop_open_file(QString)));
+#endif
+    QObject::connect(engine.rootObjects().first(), SIGNAL(apply_subscribers_count(QString)), &fgen, SLOT(set_subscribers(QString)));
 
     return app.exec();
 }

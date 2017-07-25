@@ -2,27 +2,27 @@
 
 StorageListModel::StorageListModel(QObject *parent) : QAbstractListModel(parent)
 {
-
+    qRegisterMetaType<Storage>();
 }
 
-void StorageListModel::addStorage(const Storage &storage)
+void StorageListModel::add_storage(const Storage &storage)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     storagesList << storage;
     endInsertRows();
 }
 
-Storage StorageListModel::getStorage(int number)
+Storage StorageListModel::get_storage(int number)
 {
     return storagesList.at(number);
 }
 
-int StorageListModel::getStoragesCount()
+int StorageListModel::get_storages_count()
 {
     return storagesList.count();
 }
 
-void StorageListModel::clearList()
+void StorageListModel::clear_list()
 {
     beginResetModel();
     storagesList.clear();

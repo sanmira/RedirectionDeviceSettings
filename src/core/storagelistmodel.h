@@ -17,10 +17,12 @@ public:
         StoragePath
     };
 
-    void addStorage(const Storage &storage);
-    Storage getStorage(int number);
-    int  getStoragesCount();
-    void clearList();
+    Storage get_storage(int number);
+    int  get_storages_count();
+
+public slots:
+    void clear_list();
+    void add_storage(const Storage &storage);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 

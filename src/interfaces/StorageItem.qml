@@ -1,7 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Layouts 1.1
-import QtGraphicalEffects 1.0
-import QtQuick.Window 2.0
+import QtQuick 2.9
+import QtQuick.Layouts 1.3
 
 Item {
     id: wrapper
@@ -18,9 +16,11 @@ Item {
 
         BorderImage {
             id: borderImage
-            width: 50
-            height: 50
-            source: "images/hard-disk-outline.png"
+            x: 8
+            y: 4
+            width: 42
+            height: 42
+            source: "images/save-button.png"
         }
 
         Text {
@@ -34,7 +34,7 @@ Item {
             font.family: "Tahoma"
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignLeft
-            font.pixelSize: 28
+            font.pixelSize: 19
         }
 
         MouseArea {
@@ -44,9 +44,9 @@ Item {
             onClicked: {
                 storageItemRectangle.color = "#485387"
                 if (isWriteMode) {
-                    createFile(storagePath)
+                    desktop_create_file(storagePath)
                 } else {
-                    openFile(storagePath)
+                    desktop_open_file(storagePath)
                 }
             }
         }

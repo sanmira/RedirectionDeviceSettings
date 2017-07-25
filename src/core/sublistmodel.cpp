@@ -2,41 +2,41 @@
 
 SubListModel::SubListModel(QObject *parent) : QAbstractListModel(parent), m_subCountInModel(0)
 {
-
+    qRegisterMetaType<Subscriber>();
 }
 
-void SubListModel::addSubscriber(const Subscriber &subscriber)
+void SubListModel::add_subscriber(const Subscriber &subscriber)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     subscriberList << subscriber;
     endInsertRows();
-    setSubCountInModel(subCountInModel() + 1);
+    set_sub_count_in_model(sub_count_in_model() + 1);
 }
 
-void SubListModel::removeLastSub()
+void SubListModel::remove_last_sub()
 {
     beginRemoveRows(QModelIndex(), subscriberList.count() - 1, subscriberList.count() - 1);
     subscriberList.removeLast();
     endRemoveRows();
-    setSubCountInModel(subCountInModel() - 1);
+    set_sub_count_in_model(sub_count_in_model() - 1);
 }
 
-Subscriber SubListModel::getSubscriber(int number)
+Subscriber SubListModel::get_subscriber(int number)
 {
     return subscriberList.at(number);
 }
 
-int SubListModel::getSubCount()
+int SubListModel::get_sub_count()
 {
     return subscriberList.count();
 }
 
-void SubListModel::clearList()
+void SubListModel::clear_list()
 {
     beginResetModel();
     subscriberList.clear();
     endResetModel();
-    setSubCountInModel(0);
+    set_sub_count_in_model(0);
 }
 
 int SubListModel::rowCount(const QModelIndex &parent) const

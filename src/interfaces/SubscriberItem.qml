@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 
@@ -58,7 +58,7 @@ Item {
                 id: telephoneImage
                 width: 40
                 height: 40
-                source: "images/smartphone-outline.png"
+                source: "images/phone-call-button.png"
             }
 
             RadioButton {
@@ -71,7 +71,7 @@ Item {
                 id: clockImage
                 width: 40
                 height: 40
-                source: "images/hourglass.png"
+                source: "images/set-timer-button.png"
             }
         }
         TextField {

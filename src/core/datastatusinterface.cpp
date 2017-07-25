@@ -4,3 +4,9 @@ DataStatusInterface::DataStatusInterface(QObject *parent) : QObject(parent)
 {
 
 }
+
+DataStatusInterface &DataStatusInterface::instance()
+{
+    static DataStatusInterface s;
+    return s;
+}

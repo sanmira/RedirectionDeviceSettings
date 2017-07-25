@@ -9,7 +9,7 @@
 class SubListModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(int subCountInModel READ subCountInModel WRITE setSubCountInModel NOTIFY subCountInModelChanged)
+    Q_PROPERTY(int sub_count_in_model READ sub_count_in_model WRITE set_sub_count_in_model NOTIFY sub_count_in_model_changed)
 public:
     explicit SubListModel(QObject *parent = 0);
 
@@ -25,11 +25,13 @@ public:
         TelNumber5
     };
 
-    void addSubscriber(const Subscriber &subscriber);
-    void removeLastSub();
-    Subscriber getSubscriber(int number);
-    int  getSubCount();
-    void clearList();
+    Subscriber get_subscriber(int number);
+    int  get_sub_count();
+
+public slots:
+    void clear_list();
+    void add_subscriber(const Subscriber &subscriber);
+    void remove_last_sub();
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
@@ -43,17 +45,17 @@ private:
     QList<Subscriber> subscriberList;
 
 public:
-    void setSubCountInModel(const int &subs) {
+    void set_sub_count_in_model(const int &subs) {
         if (subs != m_subCountInModel) {
             m_subCountInModel = subs;
-            emit subCountInModelChanged();
+            emit sub_count_in_model_changed();
         }
     }
-    int subCountInModel() const {
+    int sub_count_in_model() const {
         return m_subCountInModel;
     }
 signals:
-    void subCountInModelChanged();
+    void sub_count_in_model_changed();
 private:
     int m_subCountInModel;
 };

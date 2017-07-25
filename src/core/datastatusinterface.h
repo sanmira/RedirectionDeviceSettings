@@ -8,6 +8,9 @@ class DataStatusInterface : public QObject
     Q_OBJECT
     Q_PROPERTY(bool readWriteStatus READ readWriteStatus NOTIFY readWriteStatusChanged)
 public:
+    static DataStatusInterface &instance();
+
+private:
     explicit DataStatusInterface(QObject *parent = 0);
 
 public:

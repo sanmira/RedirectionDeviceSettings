@@ -2,52 +2,53 @@
 
 ModelsManager::ModelsManager(QObject *parent) : QObject(parent)
 {
-    qRegisterMetaType<Subscriber>();
-    qRegisterMetaType<Storage>();
+
 }
 
-void ModelsManager::add_new_subscriber(const Subscriber &subscriber)
+SubListModel *ModelsManager::get_sublist_model()
 {
-    subscribersList.addSubscriber(subscriber);
+    return &subscribersList;
 }
 
-void ModelsManager::remove_last_subscriber()
+StorageListModel *ModelsManager::get_storagelist_model()
 {
-    subscribersList.removeLastSub();
+    return &storagesList;
 }
 
-Subscriber ModelsManager::getSubscriber(int number)
+ModelsManager &ModelsManager::instance()
 {
-    return subscribersList.getSubscriber(number);
+    static ModelsManager s;
+    return s;
 }
 
-int ModelsManager::getSubscribersCount()
+Subscriber ModelsManager::get_subscriber(int number)
 {
-    return subscribersList.getSubCount();
+    return subscribersList.get_subscriber(number);
 }
 
-void ModelsManager::clear_subscribers_list()
+int ModelsManager::get_subscribers_count()
 {
-    subscribersList.clearList();
+    return subscribersList.get_sub_count();
 }
 
-void ModelsManager::add_new_storage(const Storage &storage)
+Storage ModelsManager::get_storage(int number)
 {
-    storagesList.addStorage(storage);
+    return storagesList.get_storage(number);
 }
 
-Storage ModelsManager::getStorage(int number)
+int ModelsManager::get_storages_count()
 {
-    return storagesList.getStorage(number);
+    return storagesList.get_storages_count();
 }
 
-int ModelsManager::getStoragesCount()
+void ModelsManager::initialize_models()
 {
-    return storagesList.getStoragesCount();
-}
+    QObject::connect(this, SIGNAL(clear_subscribers_list()), &subscribersList, SLOT(clear_list()));
+    QObject::connect(this, SIGNAL(clear_storages_list()), &storagesList, SLOT(clear_list()));
 
-void ModelsManager::clear_storages_list()
-{
-    storagesList.clearList();
+    QObject::connect(this, SIGNAL(add_new_subscriber(Subscriber)), &subscribersList, SLOT(add_subscriber(Subscriber)));
+    QObject::connect(this, SIGNAL(add_new_storage(Storage)), &storagesList, SLOT(add_storage(Storage)));
+
+    QObject::connect(this, SIGNAL(remove_last_subscriber()), &subscribersList, SLOT(remove_last_sub()));
 }
 

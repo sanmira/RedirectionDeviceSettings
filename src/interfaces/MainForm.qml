@@ -1,6 +1,7 @@
-import QtQuick 2.7
-import QtQuick.Layouts 1.1
+import QtQuick 2.9
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import QtQuick.Window 2.3
 
 Rectangle {
     id: rootBoard
@@ -39,8 +40,7 @@ Rectangle {
     Rectangle {
         id: topBoard
         height: 80
-        color: "#EA0000"
-        Behavior on color { ColorAnimation { duration: 1000 } }
+        color: "#bf2856"
         z: 1
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -77,7 +77,7 @@ Rectangle {
             width: 62
             height: 62
             antialiasing: false
-            source: "images/floppy-disk-save-button.png"
+            source: "images/upload-button.png"
 
             MouseArea {
                 id: saveButton
@@ -93,7 +93,7 @@ Rectangle {
             width: 62
             height: 62
             antialiasing: false
-            source: "images/download-arrow.png"
+            source: "images/download-button.png"
 
             MouseArea {
                 id: loadButton
@@ -109,12 +109,25 @@ Rectangle {
             width: 62
             height: 62
             antialiasing: false
-            source: "images/round-done-button.png"
+            source: "images/check-symbol.png"
             MouseArea {
                 id: applyButton
                 width: 62
                 height: 62
             }
+        }
+
+        BorderImage {
+            id: logoCyfral
+            x: 497
+            width: 135
+            height: 25
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 8
+            source: if (Window.width >= Window.height) "images/cyfral_icon_transparent.png"
+                    else ""
         }
     }
 
@@ -157,10 +170,11 @@ Rectangle {
     BorderImage {
         id: statusImage
         x: 582
+        y: 582
         width: 50
         height: 50
-        anchors.top: parent.top
-        anchors.topMargin: 90
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
         anchors.right: parent.right
         anchors.rightMargin: 8
         onSourceChanged: statusImageAnimation.running = true
@@ -170,5 +184,19 @@ Rectangle {
             NumberAnimation { target: statusImage; property: "opacity"; from: 1; to: 0; duration: 500 }
             NumberAnimation { target: statusImage; property: "opacity"; from: 0; to: 1; duration: 500 }
         }
+    }
+
+    BorderImage {
+        id: logoCyfralRed
+        y: 582
+        width: 276
+        height: 50
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 8
+        anchors.left: parent.left
+        anchors.leftMargin: 8
+        opacity: 0.1
+        source: if (Window.width < Window.height) "images/cyfral_icon_red.png"
+                else ""
     }
 }

@@ -4,15 +4,21 @@
         <file>src/interfaces/MainForm.qml</file>
         <file>src/interfaces/StorageItem.qml</file>
         <file>src/interfaces/SubscriberItem.qml</file>
-        <file>src/interfaces/images/download-arrow.png</file>
-        <file>src/interfaces/images/floppy-disk-save-button.png</file>
-        <file>src/interfaces/images/round-done-button.png</file>
-        <file>src/interfaces/images/hard-disk-outline.png</file>
-        <file>src/interfaces/images/smartphone-outline.png</file>
-        <file>src/interfaces/images/hourglass.png</file>
-        <file>src/interfaces/images/file.png</file>
-        <file>src/interfaces/images/sync-circular-arrows.png</file>
-        <file>src/interfaces/images/ok-appproval-acceptance.png</file>
-        <file>src/interfaces/images/completed-tasks.png</file>
+        <file>src/interfaces/images/cyfral_icon_red.png</file>
+        <file>src/interfaces/MainView.qml</file>
+        <file>src/interfaces/AppInfoView.qml</file>
+        <file>src/interfaces/images/check-symbol.png</file>
+        <file>src/interfaces/images/circle-with-check-symbol.png</file>
+        <file>src/interfaces/images/cyfral_icon_main.png</file>
+        <file>src/interfaces/images/cyfral_icon_transparent.png</file>
+        <file>src/interfaces/images/download-button.png</file>
+        <file>src/interfaces/images/problems-with-synchronization.png</file>
+        <file>src/interfaces/images/rounded-info-button.png</file>
+        <file>src/interfaces/images/round-error-symbol.png</file>
+        <file>src/interfaces/images/save-button.png</file>
+        <file>src/interfaces/images/set-timer-button.png</file>
+        <file>src/interfaces/images/tick-inside-circle.png</file>
+        <file>src/interfaces/images/upload-button.png</file>
+        <file>src/interfaces/images/phone-call-button.png</file>
     </qresource>
 </RCC>
